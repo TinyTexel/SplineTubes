@@ -1,0 +1,60 @@
+splines/tubes:
+> 
+
+- Rendering Tubes from Discrete Curves Using Hardware Tessellation
+link: https://www.researchgate.net/publication/254311397_Rendering_Tubes_from_Discrete_Curves_Using_Hardware_Tessellation
+(kindly provided by Alberto Raposo)
+notes:
+
+- Rendering Generalized Cylinders using the A-Buffer
+link: http://www.neulander.org/work/thesis.pdf
+notes:
+
+
+ray-casting:
+>
+
+- Ray tracing Maya Hair and Fur
+link: http://www.cse.chalmers.se/~uffe/xjobb/MayaHair.pdf
+notes: subdiv in linear segments (lame)
+
+- A Recursive Taylor Method for Ray-Casting Algebraic Surfaces
+link: http://ralph.cs.cf.ac.uk/papers/Geometry/RayCast.pdf
+notes:
+
+~ apporaches to nummerically solve 4th and 6th degree equations are required to directly ray-cast quadratic and cubic splines, respectively
+
+
+adaptive tessellation:
+>
+
+
+shading:
+>
+
+~ curvature for AO and/or SSS approximations
+- Pre-Integrated Skin Shading
+link: http://advances.realtimerendering.com/s2011/Penner%20-%20Pre-Integrated%20Skin%20Rendering%20(Siggraph%202011%20Advances%20in%20Real-Time%20Rendering%20Course).pptx
+link: http://simonstechblog.blogspot.de/2015/02/pre-integrated-skin-shading.html
+
+~ having a ray-casting routine at hand, implementing a specular transmission/reflection model with ray-tracing would be nice...
+
+
+texturing:
+>
+
+~ cross hatching perhaps...
+
+
+
+random:
+> things one finds (interesting):
+
+- Interactive Ray Casting of Geodesic Grids
+link: http://vis.cs.ucdavis.edu/papers/EuroVis13_Xie.pdf
+
+- Realtime GPU-Raycasting of Volume Data with Smooth Splines on Tetrahedral Partitions
+link: http://www.gris.informatik.tu-darmstadt.de/~dwodniok/files/wodniok_thesis.pdf
+
+- GPU-based Visualisation of Protein Secondary Structure
+link: http://www.vis.uni-stuttgart.de/uploads/tx_vispublications/TPCG08-krone-s.pdf
