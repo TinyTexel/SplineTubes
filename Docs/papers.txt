@@ -22,7 +22,24 @@ notes: subdiv in linear segments (lame)
 link: http://ralph.cs.cf.ac.uk/papers/Geometry/RayCast.pdf
 notes:
 
-~ apporaches to nummerically solve 4th and 6th degree equations are required to directly ray-cast quadratic and cubic splines, respectively
+~ approaches to numerically solve 4th and 6th degree equations are required to directly ray-cast quadratic and cubic splines, respectively
+- http://scicomp.stackexchange.com/questions/3202/solution-of-quartic-equation (stable quadratic roots)
+- http://stackoverflow.com/questions/6562867/specialised-algorithm-to-find-positive-real-solutions-to-quartic-equations :
+ - https://en.wikipedia.org/wiki/Durand%E2%80%93Kerner_method (looks simple and nice, might do)
+ - https://en.wikipedia.org/wiki/Jenkins%E2%80%93Traub_algorithm (probably too heavy for shaders (https://github.com/sweeneychris/RpolyPlusPlus))
+ - https://en.wikipedia.org/wiki/Newton%27s_method (very simple, too many problems)
+
+- different idea: binary search between local extrema where one extremum is positiv and one negative; 
+		  requires the extrema to be given -> can be determined by root finding on the derivatives, 
+		  analytically for 2nd degree or same approach applied again
+		  -> doesnt that converge exponentially?
+		  -> is there a name for this approach?
+		  - there is also no need to search for all roots, just those relevant for the (potential) front (or back) intersections
+
+~ analytic evaluation of the discriminant of a 4th degree equation turns out to be numerically instable (and also quite heavy), 
+need other early-out criterium like rasterized proxy geo (non trivial to ensure that the spline is fully enclosed, 
+also not nice for non-primary rays)
+~ no discriminant available for cubic spline (6th degree poly) -> can the existance of roots be determined differently?		  
 
 
 adaptive tessellation:
