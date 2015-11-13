@@ -25,7 +25,8 @@ notes:
 ~ approaches to numerically solve 4th and 6th degree equations are required to directly ray-cast quadratic and cubic splines, respectively
 - http://scicomp.stackexchange.com/questions/3202/solution-of-quartic-equation (stable quadratic roots)
 - http://stackoverflow.com/questions/6562867/specialised-algorithm-to-find-positive-real-solutions-to-quartic-equations :
- - https://en.wikipedia.org/wiki/Durand%E2%80%93Kerner_method (looks simple and nice, might do)
+ - https://en.wikipedia.org/wiki/Durand%E2%80%93Kerner_method (looks simple and nice, might do ~> nope, it doesnt :(, req too many iterations
+ which makes it way too slow, and still doesnt find the roots in some cases)
  - https://en.wikipedia.org/wiki/Jenkins%E2%80%93Traub_algorithm (probably too heavy for shaders (https://github.com/sweeneychris/RpolyPlusPlus))
  - https://en.wikipedia.org/wiki/Newton%27s_method (very simple, too many problems)
 
