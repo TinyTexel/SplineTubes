@@ -5,10 +5,26 @@ splines/tubes:
 link: https://www.researchgate.net/publication/254311397_Rendering_Tubes_from_Discrete_Curves_Using_Hardware_Tessellation
 (kindly provided by Alberto Raposo)
 notes:
+~ sequence of points define curve -> interpolated with Catmull-Rom splines
+~ points are sent to GPU, geometry created in hull-shader/tessellator/domain-shader
+~ approx the curve with linear segments, adaptively adds more segments in regions with large derivatives
+~ LOD reduces only cross-section vertex count down to three (triangular cross-section)
+~ radius is scaled up over distance to reduce aliasing 
+	~> apparently no MSAA is used in addition but AA is supposedly eliminated (?)
+	~> also no opacity reduction applied when reaching sub-pixel diameters
+~ benchmark compares the tessellator-approach to a naive one where the geo is generated on CPU and send to GPU
+	~> strongly reduced banwidth requirements
+~ AA approach (scaling radius) is compared to no AA (benchmark in fps *sigh*)
+	~> nearly no fps drop
+	
 
 - Rendering Generalized Cylinders using the A-Buffer
 link: http://www.neulander.org/work/thesis.pdf
 notes:
+~ dynamic adaptive screne-space tessellation of curves with varying radii
+~ using an A-Buffer for AA purposes
+~ positions und radii are interpolated using cubic splines (Catmull-Rom)
+~ other properties like color, opacity, reflectance are linearly interpolated 
 
 
 ray-casting:
@@ -76,3 +92,11 @@ link: http://www.gris.informatik.tu-darmstadt.de/~dwodniok/files/wodniok_thesis.
 
 - GPU-based Visualisation of Protein Secondary Structure
 link: http://www.vis.uni-stuttgart.de/uploads/tx_vispublications/TPCG08-krone-s.pdf
+
+- Extending the graphic pipeline with new GPU-accelerated primitives
+link: http://alice.loria.fr/publications/papers/2004/ray_tracing_gpu/gpu_accelerated_primitives.pdf
+~ basic ray-casting (quadrics, no curved tubes)
+
+- Jim Blinn's Corner: A trip down the graphics pipeline - Optimal Tubes
+~ viewspace proxy geometry for cylinders 
+
