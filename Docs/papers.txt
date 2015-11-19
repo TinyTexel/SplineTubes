@@ -22,17 +22,42 @@ notes:
 link: http://www.neulander.org/work/thesis.pdf
 notes:
 ~ dynamic adaptive screne-space tessellation of curves with varying radii
-~ using an A-Buffer for AA purposes
+~ using an A-Buffer for AA purposes (also adaptively supersamples its Phong lighting model)
+~ software-based implementation
 ~ positions und radii are interpolated using cubic splines (Catmull-Rom)
 ~ other properties like color, opacity, reflectance are linearly interpolated 
+~ coarse tessellation followed by length- and breadthwise refinement using different constraints
+~ position constraint I: based on the angle between the screenspace tangent vectors of start/end-point of sub-segment
+~ position constraint II: maintains a desired degree of linearity in the z-component
+  ~> necessary to ensure that a curved segment is adequately subdivided even when viewed from an angle 
+     that makes its screen pro jection close to linear (important for quality of normales and texcoords)
+~ radius contraint: ensure smooth variation in the radius of a segment
+~ inflection point constraint: ensures that inflection point lie between sub-segment (on their vertices)
+~ 3 quality levels for breadthwise refinement, higher levels better approximate tube
+  ~> chosen depending on screenspace size and quality requirements
+~ backface culling for each segment
+~ normal calculation must consider changing radius
+~ high screenspace curvature can lead to ill-formed polygons
+  ~> handled by splitting the offending polygon into an equivalent pair of triangles
+~ variety of effects like length- and breadthwise opacity variation and a global illumination model that approx AO based 
+on the assumption that the paintstroke (tube) is embedded in a layer of a homogeneous medium
+~ benchmarks are pretty deprecated (thesis from 1997), render times given in ticks (s/60, still better than fps...)
+~ overall approach appears annoyingly fiddly 
 
-
+	 
 ray-casting:
 >
 
 - Ray tracing Maya Hair and Fur
 link: http://www.cse.chalmers.se/~uffe/xjobb/MayaHair.pdf
-notes: subdiv in linear segments (lame)
+notes: 
+~ subdiv in linear segments with varying radius
+
+- Tron, Volumetric Lines, and Meshless Tubes Hilbert Cubed Sphere
+link: http://prideout.net/blog/?p=61
+notes:
+~ linear segments...
+
 
 - A Recursive Taylor Method for Ray-Casting Algebraic Surfaces
 link: http://ralph.cs.cf.ac.uk/papers/Geometry/RayCast.pdf
