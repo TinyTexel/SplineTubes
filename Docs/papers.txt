@@ -77,7 +77,8 @@ notes:
 		  -> doesnt that converge exponentially?
 		  -> is there a name for this approach?
 		  - there is also no need to search for all roots, just those relevant for the (potential) front (or back) intersections
-
+			~> works much better than Durand-Kerner, a lot faster and pretty robust (have to check border cases, though, but overall very promising)
+			
 ~ analytic evaluation of the discriminant of a 4th degree equation turns out to be numerically instable (and also quite heavy), 
 need other early-out criterium like rasterized proxy geo (non trivial to ensure that the spline is fully enclosed, 
 also not nice for non-primary rays)
