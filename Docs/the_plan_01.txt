@@ -1,0 +1,45 @@
+November:
+02.11 - 08.11		|	02.11 Analyse Start,LR  |
+09.11 - 15.11		|	LR				        |	09.11 FoPro Start
+16.11 - 22.11		|	LR                      |	
+23.11 - 29.11		|	LR                      |	
+	
+Dezember:                                       	
+30.11 - 06.12		|	LR                      |	quadS rc, start cubS rc
+07.12 - 13.12		|	Eva                     |	cubS rc, AA
+14.12 - 20.12		|	Eva                     |	megamol rc impl
+21.12 - 27.12		|	~~Weihnachten~~         |	~~Weihnachten~~
+28.12 - 03.01		|	~~Neujahr~~             |	~~Neujahr~~
+	
+Januar:                                         	
+04.01 - 10.01		|	Eva                     |	tess, shading 
+11.01 - 17.01		|	Auf                     |	
+18.01 - 24.01		|	Konz                    |	tess megamol impl
+25.01 - 31.01		|	Konz                    |	
+	
+Februar:                                        	
+01.02 - 07.02		|	Konz                    |	start writing
+08.02 - 14.02		|	Konz                    |	
+15.02 - 21.02		|	Pres					|	
+22.02 - 28.02		|	22.02 Analyse End,Kolloq|	
+	
+März:                                           	
+29.02 - 06.03		|	                        |	
+07.03 - 13.03		|	                        |	
+14.03 - 20.03		|	                        |	
+21.03 - 27.03		|	                        |	
+28.03 - 03.04		|	                        |	finish writing
+	
+April:                                          	
+04.04 - 10.04		|	                        |	
+11.04 - 17.04		|	                        |	
+18.04 - 24.04		|	                        |	
+25.04 - 01.05		|	                        |	
+	
+Mai:                                            	
+02.05 - 08.05		|	Major Thesis Start (?)  |	
+09.05 - 15.05		|					        |	09.05 FoPro End
+16.05 - 22.05		|	                        |	
+23.05 - 29.05		|	                        |	
+30.05 - 05.06		|	                        |	
+
