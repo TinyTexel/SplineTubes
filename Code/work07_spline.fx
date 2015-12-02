@@ -814,7 +814,7 @@ float3 PS( PS_IN In ) : SV_Target
 				
 				float2 d2Roots = poly4D2Roots.Eval();
 				
-				// d2Roots = saturate(d2Roots);
+				d2Roots = saturate(d2Roots);
 				
 				uint iCount1 = 10;
 				uint iCount2 = 20;
@@ -913,42 +913,60 @@ float3 PS( PS_IN In ) : SV_Target
 				// if(roots.x > 0.9f || roots.x < 0.f) isDpos = 0.f;
 				fCol = roots.z;
 				
+				//region finalize
 				{
-					float count = 10.f;
-					float steps = 1.f / count;
-					float t = 10000.f;
-					float l0 = 0.f;
-					float l = 0.f;
-					float l1 = 0.f;
-					bool blob = false;
-					
-					for(uint j = 0; j < 3; ++j)
+				
+					OFUNC(minFinder, INull,
+					float Eval(float a, float b, IEVAL(float, (float), 1) func, uint count, float count2 = 3.f)
 					{
-						for(float i = 0.f; i <= count; ++i)
+						float steps = 1.f / count2;
+						float t = 10000.f;
+						float l0 = 0.f;
+						float l = 0.f;
+						float l1 = 0.f;
+						
+						
+						for(uint j = 0; j < count; ++j)
 						{
-							float tempL = lerp(roots.x, roots.z, steps * i);
-							// tempL = steps * i;
-							float tempT = qSplineIDist.Eval(tempL);
+							bool blob = false;
+							t = 10000.f;
+							l = l0;
+							l1 = l0;
 							
-							if(tempT < t)
+							for(float i = 0.f; i <= count2; ++i)
+							// for(float i = count; i >= 0.f; --i)
 							{
-								t = tempT;
-								l0 = l;
-								l = tempL;
-								l1 = l;
-								blob = true;
+								float tempL = lerp(a, b, steps * i);
+								// tempL = steps * i;
+								float tempT = func.Eval(tempL);
+								
+								if(tempT < t)
+								{
+									t = tempT;
+									
+									l0 = l;
+									l = tempL;
+									l1 = tempL;
+									
+									blob = true;
+								}
+								else
+								{
+									if(blob) l1 = tempL;
+									blob = false;
+								}
 							}
-							else
-							{
-								if(blob) l1 = tempL;
-								blob = false;
-							}
+							
+							// 
+							a = l0;
+							b = l1;
 						}
 						
-						roots.x = l0;
-						roots.z = l1;
-					}
+						return l;
+					})
 					
+					float l = minFinder.Eval(roots.x, roots.z, qSplineIDist, 10, 3);
+					float t = qSplineIDist.Eval(l);
 					// if(0)
 					// for(float i = 0.f; i <= count; ++i)
 					// {
@@ -975,7 +993,33 @@ float3 PS( PS_IN In ) : SV_Target
 					float3 n = normalize(ip - sp);
 					fCol = n * 0.5f + 0.5f;
 				}
+				//endregion
 				
+				// if(fd.x < 0.f && fd.x > -1.f || fd.z < 0.f && fd.z > -1.f) 
+				// if(fd.x < 0.f || fd.z < 0.f) 
+				// {
+					// fCol = -max(fd.x, fd.z);
+					// isDpos = 1.f;
+				// }
+				// if(fd.x < 0.f || fd.z < 0.f) 
+				// if(fd.x < 0.f) 
+				{
+					// fCol = -max(fd.x, fd.z);
+					
+					// if(fd.x < 0.f && fd.z > 0.f)
+					// if(fd.x > -1.f)
+					// {fCol = -fd.x; isDpos = 1.f;}
+					
+					// if(fd.x > fd.z && fd.x < 0.f || fd.z > 0.f) {fCol = -fd.x; isDpos = 1.f;}
+					// if(fd.z > fd.x && fd.z < 0.f || fd.x > 0.f) {fCol = -fd.z; isDpos = 1.f;}
+					
+					// fCol = -fd.x;
+					// fCol = -fd.z;
+					// isDpos = 1.f;
+					// return sqrt(fCol + r2);
+					// return -Draw::ApplyDistScale(sqrt(fCol + r2) - r);
+					// return Draw::Isolines(sqrt(fCol + r2) - r);
+				}
 				// fCol = 1.f;
 				
 			}
@@ -1186,7 +1230,7 @@ float3 PS( PS_IN In ) : SV_Target
 	//endregion
 	
 	//region binary root finding
-	if(0)
+	 if(0)
 	{
 		// fCol = 0.f;
 		
@@ -1298,6 +1342,110 @@ float3 PS( PS_IN In ) : SV_Target
 			
 			fCol = lerp(fCol, Col3::R, Draw::Dot(uv, float2(roots.x, 0.f), dotR));
 			fCol = lerp(fCol, Col3::R, Draw::Dot(uv, float2(roots.z, 0.f), dotR));
+		}
+	}
+	//endregion
+	
+	//region min finder
+	if(0)
+	{
+		fCol = 0.f;
+		
+		float2 uv = fuv; uv.y = 1.f - uv.y;
+		// uv.x += 
+		uv.y = MapTo(uv.y, -1.f, 1.f);
+		uv.x = MapTo(uv.x, -1.f, 1.f);
+		uv *= 2.f;
+		
+		OFUNC(minFinder, INull,
+		float Eval(float a, float b, IEVAL(float, (float), 1) func, uint count, float count2 = 3.f)
+		{
+			uint noo = 1;
+			
+			float steps = 1.f / count2;
+			float t = 10000.f;
+			float l0 = 0.f;
+			float l = 0.f;
+			float l1 = 0.f;
+			
+			
+			for(uint j = 0; j < count; ++j)
+			{
+				bool blob = false;
+				t = 10000.f;
+				l = l0;
+				l1 = l0;
+				
+				for(float i = 0.f; i <= count2; ++i)
+				// for(float i = count; i >= 0.f; --i)
+				{
+					float tempL = lerp(a,b,  steps * i);
+					// tempL = steps * i;
+					float tempT = func.Eval(tempL);
+					
+					if(j == noo)
+					fCol = lerp(fCol, Col3::C, Draw::Dot(uv, float2(tempL, tempT), 0.025f));
+					
+					if(tempT < t)
+					{
+						t = tempT;
+						
+						l0 = l;
+						l = tempL;
+						l1 = tempL;
+						
+						blob = true;
+					}
+					else
+					{
+						if(blob) l1 = tempL;
+						blob = false;
+					}
+				}
+				
+				// 
+				a = l0;
+				b = l1;
+				
+				if(j == noo)fCol = lerp(fCol, Col3::Y, Draw::Circle(uv, float2(a, func.Eval(a)), 0.05f));
+				if(j == noo)fCol = lerp(fCol, Col3::Y, Draw::Circle(uv, float2(b, func.Eval(b)), 0.05f));
+			}
+			
+			return l;
+		})
+		
+		
+		// fCol = Pow2(uv.x) - uv.y;
+		// fCol = 1.f - saturate(abs(fCol.x) * RcpLen(float2(ddx(fCol.x), ddy(fCol.y))));
+		fCol = lerp(saturate(fCol), 1.f, Draw::CoordSys(uv));
+		
+		float2 ival = float2(-0.7f, 0.75f);
+		float c0 = 0.1f;
+		float c1 = 0.5f;
+		float c2 = 0.f;
+		float c3 = 0.f;
+		float c4 = -4.f;
+		
+		OFUNC(poly4, IEVAL(float, (float), 1),
+		float Eval(float x)
+		{
+			return -((c4 * Pow4(x)) + (c3 * Pow3(x)) + (c2 * Pow2(x)) + (c1 * x) + c0);
+		})
+		
+		float minl = minFinder.Eval(ival.x, ival.y, poly4, 5, 3);
+		float mint = poly4.Eval(minl);
+		
+		{
+			float dotR = 0.02f;
+			
+			fCol = lerp(fCol, Col3::G, Draw::Curve(uv, poly4));
+			fCol = lerp(fCol, Col3::R, Draw::Dot(uv, float2(ival.x, poly4.Eval(ival.x)), dotR));
+			fCol = lerp(fCol, Col3::R, Draw::Dot(uv, float2(ival.y, poly4.Eval(ival.y)), dotR));
+			
+			fCol = lerp(fCol, Col3::B, Draw::Dot(uv, float2(minl, poly4.Eval(minl)), dotR));
+			
+			// fCol = lerp(fCol, Col3::R, Draw::Curve(uv, poly4D1));
+			// fCol = lerp(fCol, Col3::B, Draw::Curve(uv, poly4D2));
 		}
 	}
 	//endregion
