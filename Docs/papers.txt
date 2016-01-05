@@ -1,3 +1,8 @@
+Quadratic Bezier - 3D: https://www.shadertoy.com/view/ldj3Wh
+Quadratic Bezier Stroke: https://www.shadertoy.com/view/XsX3zf
+-> based on http://research.microsoft.com/en-us/um/people/hoppe/ravg.pdf
+https://en.wikipedia.org/wiki/Quartic_function#Ferrari.27s_solution
+
 splines/tubes:
 > 
 

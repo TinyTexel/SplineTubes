@@ -15,6 +15,90 @@
 		// DEF_IEVAL(Cmplx, (Cmplx), 1)
 // #endif
 
+#define DEF_EVALPOLY(N)                                    \
+float EvalPoly(float x, float c[N+1], uint d = 0)            \
+{                                                          \
+	float xn = 1.f;                                        \
+	float r = 0.f;                                         \
+	                                                       \
+	[unroll]                                               \
+	for(uint i = d; i < N+1; ++i)                            \
+	{                                                      \
+		float n = 1.f;                                     \
+		                                                   \
+		[unroll]                                           \
+		for(uint j = 0; j < d; ++j)                        \
+		n *= i - j;                                        \
+		                                                   \
+		r += n * c[i] * xn;                                \
+		xn *= x;                                           \
+	}                                                      \
+                                                           \
+	return r;                                              \
+}
+
+DEF_EVALPOLY(0)
+DEF_EVALPOLY(1)
+DEF_EVALPOLY(2)
+DEF_EVALPOLY(3)
+DEF_EVALPOLY(4)
+DEF_EVALPOLY(5)
+DEF_EVALPOLY(7)
+DEF_EVALPOLY(8)
+DEF_EVALPOLY(9)
+DEF_EVALPOLY(10)
+
+// #ifndef DEF_IEvalCmplxCmplx
+// #define DEF_IEvalCmplxCmplx
+		// DEF_IEVAL(Cmplx, (Cmplx), 1)
+// #endif
+
+
+#define DEF_POLY(N)                                         \
+struct Poly##N : IEVAL(float, (float), 1)                   \
+{                                                           \
+	float C[N+1];                                             \
+	                                                        \
+	static Poly##N New(float c[N+1])                          \
+	{                                                       \
+		Poly##N poly;                                       \
+		                                                    \
+		poly.C = c;                                         \
+		                                                    \
+		return poly;                                        \
+	}                                                       \
+                                                            \
+	float Eval(float x, uint d)                    	        \
+	{                                                       \
+		return EvalPoly(x, C, d);                           \
+	}                                                       \
+	                                                        \
+    float Eval(float x)                     				\
+	{                                                       \
+		return EvalPoly(x, C, 0);                           \
+	}                                                       \
+	                                                        \
+	IEVAL(float, (float), 1) New(uint d = 0)                \
+	{                                                       \
+		float l[N+1] = C;                                     \
+		                                                    \
+		OFUNC(poly, IEVAL(float, (float), 1),               \
+		float Eval(float x)                                 \
+		{                                                   \
+			return EvalPoly(x, l, d);                       \
+		})                                                  \
+		                                                    \
+		return poly;                                        \
+	}                                                       \
+};
+
+DEF_POLY(0)
+DEF_POLY(1)
+DEF_POLY(2)
+DEF_POLY(3)
+DEF_POLY(4)
+DEF_POLY(5)
+
 struct Hit
 {
 	bool Mask;
@@ -35,10 +119,7 @@ struct Hit
 	}
 };
 
-// Hit hit()
-// {
 
-// }
 
 Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3 h, float r = 0.25f, uint mode = 0)
 {
@@ -84,34 +165,46 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 		return lerp(lerp(c1, h, l), lerp(h, c2, l), l);
 	})
 	
-	// -c1y^2 - c1z^2 + r^2
-	float discr_e = -c1_2.y - c1_2.z + r2;
-	// (4 c1y^2 + 4 c1z^2 - 4 c1y hy - 4 c1z hz) t
-	float discr_d = 4.f * c1_2.y + 4.f * c1_2.z - 4.f * c1.y * h.y - 4.f * c1.z * h.z;
-	// (-6 c1y^2 - 6 c1z^2 - 2 c1y c2y - 2 c1z c2z + 12 c1y hy - 4 hy^2 + 12 c1z hz - 4 hz^2) t^2
-	float discr_c = -6.f * c1_2.y - 6.f * c1_2.z - 2.f * c1.y * c2.y - 2.f * c1.z * c2.z + 12.f * c1.y * h.y - 4.f * h2.y + 12.f * c1.z * h.z - 4.f * h2.z;
-	// (4 c1y^2 + 4 c1z^2 + 4 c1y c2y + 4 c1z c2z - 12 c1y hy - 4 c2y hy + 8 hy^2 - 12 c1z hz - 4 c2z hz + 8 hz^2) t^3
-	float discr_b = 4.f * c1_2.y + 4.f * c1_2.z + 4.f * c1.y * c2.y + 4.f * c1.z * c2.z - 12.f * c1.y * h.y - 4.f * c2.y * h.y + 8.f * h2.y - 12.f * c1.z * h.z - 4.f * c2.z * h.z + 8.f * h2.z;
-	// (-c1y^2 - c1z^2 - 2 c1y c2y - c2y^2 - 2 c1z c2z - c2z^2 + 4 c1y hy + 4 c2y hy - 4 hy^2 + 4 c1z hz + 4 c2z hz - 4 hz^2) t^4
-	float discr_a = -c1_2.y - c1_2.z - 2.f * c1.y * c2.y - c2_2.y - 2.f * c1.z * c2.z - c2_2.z + 4.f * c1.y * h.y + 4.f * c2.y * h.y - 4.f * h2.y + 4.f * c1.z * h.z + 4.f * c2.z * h.z - 4.f * h2.z;
+
 	
+	float polyA_C[3] = 
+	{
+		c1.x, 
+		-2.f * c1.x + 2.f * h.x, 
+		c1.x + c2.x - 2.f * h.x
+	};
 	
-	OFUNC(discrSpline, IEVAL(float, (float), 1),
-	float Eval(float l)
-	{				
-		float l1 = l - 1.f;
-		float2 term = Pow2(l1 * l1 * c1.yz + l * (l * c2.yz - 2.f * l1 * h.yz));
+	Poly2 polyA = Poly2::New(polyA_C);
+	
+	float polyB_C[5] = 
+	{
+		-c1_2.y - c1_2.z + r2,
 		
-		return r2 - term.x - term.y;
-	})
+		4.f * c1_2.y + 4.f * c1_2.z - 4.f * c1.y * h.y - 4.f * c1.z * h.z,
+		
+		-6.f * c1_2.y - 6.f * c1_2.z - 2.f * c1.y * c2.y - 2.f * c1.z * c2.z + 
+		12.f * c1.y * h.y - 4.f * h2.y + 12.f * c1.z * h.z - 4.f * h2.z,
+		
+		4.f * c1_2.y + 4.f * c1_2.z + 4.f * c1.y * c2.y + 4.f * c1.z * c2.z - 
+		12.f * c1.y * h.y - 4.f * c2.y * h.y + 8.f * h2.y - 12.f * c1.z * h.z - 4.f * c2.z * h.z + 8.f * h2.z,
+		
+		-c1_2.y - c1_2.z - 2.f * c1.y * c2.y - c2_2.y - 2.f * c1.z * c2.z - c2_2.z + 
+		4.f * c1.y * h.y + 4.f * c2.y * h.y - 4.f * h2.y + 4.f * c1.z * h.z + 4.f * c2.z * h.z - 4.f * h2.z,
+	};
+	
+	Poly4 polyB = Poly4::New(polyB_C);
+	
 	
 	OFUNC(qSplineIDist, IEVAL(float, (float), 1),
 	float Eval(float l)
 	{
 		float term = l*l * (c1.x + c2.x - 2.f * h.x) + l * (-2.f * c1.x + 2.f * h.x) + c1.x;
 		
-		float discr = discrSpline.Eval(l);
+		float discr = polyB.Eval(l);
 		// discr = max(0.f, discr);
+		
+		term = polyA.Eval(l);
+		discr = polyB.Eval(l);
 		
 		if(discr < 0.f)
 		return 999999.f;
@@ -121,83 +214,60 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 	
 	OFUNC(qSplineD1, IEVAL(float, (float), 1),
 	float Eval(float t)
-	{	 
-		// float term1 = -2.f * c1.x + 2.f * t * c1.x + 2.f * t * c2.x + 2.f * h.x - 4.f * t * h.x;
+	{	 		
+		//D[1][f1][x]*2 Sqrt[f2[x]] + D[1][f2][x]
+		float f1D1 = polyA.Eval(t, 1);
 		
-		// float2 term21 = (t - 1.f) * c1.yz + t * c2.yz + (1.f - 2.f * t) * h.yz;
-		// float2 term22 = Pow2(t - 1.f) * c1.yz + t * (t * c2.yz - 2.f * (t - 1.f) * h.yz);			 
-	 
-		// float discr = discrSpline.Eval(t);
-		// discr = max(0.f, discr);
+		float f2 = polyB.Eval(t);
+		float f2D1 = polyB.Eval(t, 1);
 		
-		// return term1 * (2.f * sqrt(discr)) - (-4.f * term21.x * term22.x - 4.f * term21.y * term22.y);
-		
-		float term1 = -c1.x + t * c1.x + t * c2.x + h.x - 2.f * t * h.x;
-		
-		float2 term21 = (t - 1.f) * c1.yz + t * c2.yz + (1.f - 2.f * t) * h.yz;
-		float2 term22 = Pow2(t - 1.f) * c1.yz + t * (t * c2.yz - 2.f * (t - 1.f) * h.yz);			 
-	 
-		float discr = discrSpline.Eval(t);
-		discr = max(0.f, discr);
-		
-		return term1 * sqrt(discr) + (term21.x * term22.x + term21.y * term22.y);
-		// return term1 + (term21.x * term22.x + term21.y * term22.y) * rsqrt(discr);
+		// return f1D1 * 2.f * sqrt(max(0.f, f2)) - f2D1;
+		return f1D1 - f2D1 * 0.5f * rsqrt(max(0.f, f2));
 	})
 	
 	OFUNC(qSplineD2, IEVAL(float, (float), 1),
 	float Eval(float t)
-	{
-		float3 term1 = (t - 1.f) * c1 + t * c2 + (1.f - 2.f * t) * h;
-		float3 term2 = 4.f * (c1 + c2 - 2.f * h);
-		float3 term3; 
-			term3.yz = Pow2(t - 1.f) * c1.yz + t * (t * c2.yz - 2.f * (t - 1.f) * h.yz);
-  
-		float2 termA = -8.f * Pow2(term1.yz) - term2.yz * term3.yz;
-		float2 termB = -4.f * term1.yz * term3.yz;
+	{		
+		float f1D1 = polyA.Eval(t, 1);
+		float f1D2 = polyA.Eval(t, 2);
 		
-		float discr = discrSpline.Eval(t);
-			
-		return -(termA.x + termA.y) + term1.x * (term1.y * term3.y + term1.z * term3.z) + term2.x * discr;
+		float f2 = polyB.Eval(t);
+		float f2D1 = polyB.Eval(t, 1);
+		float f2D2 = polyB.Eval(t, 2);
+		
+		f2 = max(0.f, f2);
+
+		// return Pow2(f2D2) / (4.f * pow(f2, 1.5f)) + f1D2 - f2D2 / (2.f * sqrt(f2));
+		// return Pow2(f2D2) / Pow2(f2) * 0.5f + f1D2 * sqrt(f2) * 2.f - f2D2;
+		// return Pow2(f2D2 / f2) * 0.5f + f1D2 * sqrt(f2) * 2.f - f2D2;
+		return (Pow2(f2D2 / f2) * 0.5f - f2D2) * rsqrt(f2) + f1D2 * 2.f ;		
 	})
 	
 	OFUNC(qSplineD3, IEVAL(float, (float), 1),
 	float Eval(float t)
-	{
-		float3 term1;
-			term1.yz =  t * Pow2(c2.yz) + (-1.f + t) * Pow2(c1.yz) + c2.yz * h.yz - 
-						4.f * t * c2.yz * h.yz - 2.f * Pow2(h.yz) +                         		
-						4.f * t * Pow2(h.yz) + c1.yz * ((-1 + 2.f * t) * c2.yz + (3.f - 4.f * t) * h.yz);
-						
-		float3 term2 = 	c1 + c2 - 2.f * h;
+	{	
+		float f2 = polyB.Eval(t);
+		float f2D1 = polyB.Eval(t, 1);
+		float f2D2 = polyB.Eval(t, 2);
+		float f2D3 = polyB.Eval(t, 3);
 		
-		float3 term3 = 	(-1.f + t) * c1 + t * c2 + (1.f - 2.f * t) * h;
+		f2 = max(0.f, f2);	   
+	   
+		// return 
+		// f2D1 * f2D2 / (2.f * pow(f2, 1.5f)) + 
+		// 0.5f * f2D1 * (-3.f * Pow2(f2D1) / (4.f * pow(f2, 2.5f)) + f2D2 / (2.f * pow(f2, 1.5f)) ) + 
+		// f1D3 - 
+		// f2D3 / (2.f * sqrt(f2));
 		
-		float3 term4;
-			term4.yz = 	Pow2(-1.f + t) * c1.yz + t * (t * c2.yz - 2.f * (-1.f + t) * h.yz);
+		// return 
+		// f2D1 * (f2D2 / Pow2(f2) - Pow2(f2D1) / Pow3(f2) * 0.75f + f2D2 / Pow2(f2) * 0.5f ) + 
+		// f1D3 * sqrt(f2) * 2.f - 
+		// f2D3;
 		
-		
-		float  termA = 24.f * (term1.y + term1.z);
-		
-		float2 termB = -8.f * Pow2(term3.yz) - 4.f * term2.yz * term4.yz;
-		
-		float2 termC = -4.f * term3.yz * term4.yz;
-		
-		
-		return termA + 2.f * term3.x * (termB.x + termB.y) + 6.f * term2.x * (termC.x + termC.y);
-		
-		// return 0.f; 
+		// return (f2D1 * f2D2 / Pow2(f2) - Pow3(f2D1 / f2) * 0.75f - f2D3) * rsqrt(f2) + f1D3 * 2.f;
+		return f2D1 * f2D2 / Pow2(f2) - Pow3(f2D1 / f2) * 0.75f - f2D3;	
 	})
 	
-	OFUNC(discrSplineD1, INull,
-	float Eval(float l)
-	{				
-		float l1 = l - 1.f;
-		// ((-1 + t) c1[[2]] + t c2[[2]] + (1 - 2 t) h[[2]]) ((-1 + t)^2 c1[[2]] + t (t c2[[2]] - 2 (-1 + t) h[[2]]))
-		float2 term = -4.f * (l1 * c1.yz * l * c2.yz + (1.f - 2.f * l) * h.yz) 
-						   * (l1 * l1 * c1.yz + l * (l * c2.yz - 2.f * l1 * h.yz));
-
-		return term.x + term.y;
-	})
 	
 	float isDpos = 0.f;
 	
@@ -208,44 +278,16 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 		isDpos = 0.f;
 
 		float2 ival = float2(0.f, 1.f);
-		// ival = float2(-r, 1.f + r);
+		// ival = float2(-r, 1.f + r);		
 		
-		float c0 = discr_e;
-		float c1 = discr_d;
-		float c2 = discr_c;
-		float c3 = discr_b;
-		float c4 = discr_a;
-		
-		OFUNC(poly4, IEVAL(float, (float), 1),
-		float Eval(float x)
-		{
-			return (c4 * Pow4(x)) + (c3 * Pow3(x)) + (c2 * Pow2(x)) + (c1 * x) + c0;
-		})
-		
-		OFUNC(poly4D1, IEVAL(float, (float), 1),
-		float Eval(float x)
-		{
-			return (4.f * c4 * Pow3(x)) + (3.f * c3 * Pow2(x)) + (2.f * c2 * x) + c1;
-		})
-		
-		OFUNC(poly4D2, IEVAL(float, (float), 1),
-		float Eval(float x)
-		{
-			return (12.f * c4 * Pow2(x)) + (6.f * c3 * x) + (2.f * c2);
-		})
-		
-		OFUNC(poly4D2Roots, INull,
-		float2 Eval()
-		{
-			float a = 12.f * c4;
-			float b =  6.f * c3;
-			float c =  2.f * c2;
-		
+		OFUNC(quadPolyRoots, INull,
+		float2 Eval(float c, float b, float a)
+		{		
 			float discr = b * b - 4.f * a * c;
 			discr = max(0.f, discr);
 			
 			return (-b + float2(1.f, -1.f) * sqrt(discr)) / (2.f * a);
-			return -2.f * c / (b + float2(1.f, -1.f) * sqrt(discr));
+			// return -2.f * c / (b + float2(1.f, -1.f) * sqrt(discr));
 		})
 		
 		OFUNC(binRootFinder, INull,
@@ -254,9 +296,10 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 			// float n = func.Eval(x1) < 0.f ? x1 : x2;
 			// float p = x1 + x2 - n;
 			
-			if(func.Eval(p) < 0.f) return p;
 			if(func.Eval(n) > 0.f) return n;
+			if(func.Eval(p) < 0.f) return p;		
 			
+			[loop]
 			for(uint i = 0; i < iCount; ++i)
 			{
 				float m = (n + p) * 0.5f;
@@ -272,29 +315,30 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 			return (n + p) * 0.5f;
 		})
 		
-		float2 d2Roots = poly4D2Roots.Eval();
+		float2 d2Roots = quadPolyRoots.Eval(polyB.C[2], 3.f * polyB.C[3], 6.f * polyB.C[4]);
 		
 		// ival.x = min(ival.x, d2Roots.x);
 		// ival.y = max(ival.y, d2Roots.y);
-		// d2Roots = saturate(d2Roots);
-		d2Roots = clamp(d2Roots, ival.x, ival.y);
+		d2Roots = saturate(d2Roots);
+		// d2Roots = clamp(d2Roots, ival.x, ival.y);
 		
 		uint iCount1 = 10;
 		uint iCount2 = 20;
 		
 		float3 d1Roots = 0.f;
-		d1Roots.x = binRootFinder.Eval(d2Roots.x, ival.x, poly4D1, iCount1);
-		d1Roots.y = binRootFinder.Eval(d2Roots.x, d2Roots.y, poly4D1, iCount1);
-		d1Roots.z = binRootFinder.Eval(ival.y, d2Roots.y, poly4D1, iCount1);
+		
+		d1Roots.x = binRootFinder.Eval(d2Roots.x, ival.x, polyB.New(1), iCount1);
+		d1Roots.y = binRootFinder.Eval(d2Roots.x, d2Roots.y, polyB.New(1), iCount1);
+		d1Roots.z = binRootFinder.Eval(ival.y, d2Roots.y, polyB.New(1), iCount1);
 		
 		float3 fd;
-		fd.x = discrSpline.Eval(d1Roots.x);
-		fd.y = discrSpline.Eval(d1Roots.y);
-		fd.z = discrSpline.Eval(d1Roots.z);
+		fd.x = polyB.Eval(d1Roots.x);
+		fd.y = polyB.Eval(d1Roots.y);
+		fd.z = polyB.Eval(d1Roots.z);
 		
 		float2 fd0;
-		fd0.x = discrSpline.Eval(ival.x);
-		fd0.y = discrSpline.Eval(ival.y);
+		fd0.x = polyB.Eval(ival.x);
+		fd0.y = polyB.Eval(ival.y);
 		
 		float2 fdT;
 		fdT.x = qSplineIDist.Eval(d1Roots.x);
@@ -348,11 +392,11 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 				}
 				
 				// if(n1 == ival.x && fd0.x > 0.f) roots.x = n1; else
-				roots.x = binRootFinder.Eval(n1, p1, poly4, iCount2);
+				roots.x = binRootFinder.Eval(n1, p1, polyB, iCount2);
 				// roots.x = binRootFinder.Eval(lerp(n1, p1, 0.05f), lerp(p1, n1, 0.05f), poly4, iCount2);
 				
 				// if(n2 == ival.y && fd0.y > 0.f) roots.z = n2; else
-				roots.z = binRootFinder.Eval(n2, p2, poly4, iCount2);
+				roots.z = binRootFinder.Eval(n2, p2, polyB, iCount2);
 				// roots.z = binRootFinder.Eval(lerp(n2, p2, 0.05f), lerp(p2, n2, 0.05f), poly4, iCount2);
 				
 				if(rootType == 2.f)
@@ -370,12 +414,12 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 						n2 = ival.y;
 					}
 						
-					rootsAlt.x = binRootFinder.Eval(n1, p1, poly4, iCount2);
-					rootsAlt.z = binRootFinder.Eval(n2, p2, poly4, iCount2);
+					rootsAlt.x = binRootFinder.Eval(n1, p1, polyB, iCount2);
+					rootsAlt.z = binRootFinder.Eval(n2, p2, polyB, iCount2);
 				}
 			}
 			
-			// if(discrSpline.Eval(d1Roots.x) < 0.f)// || d1Roots.x < 0.f
+			// if(polyB.Eval(d1Roots.x) < 0.f)// || d1Roots.x < 0.f
 			// {
 				// n = d1Roots.y;
 				// p = d1Roots.z;
@@ -388,69 +432,21 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 			// roots.z = binRootFinder.Eval(ival.y, d1Roots.z, poly4, iCount2);
 			// roots.z = binRootFinder.Eval(d1Roots.y, d1Roots.x, poly4, iCount2);
 		}
-		
-		//region linear roots
-		if(0)
-		{
-			roots = 0.f;
-			
-			float count = 200.f;
-			float rCount = rcp(count);
-			
-			{
-				float tempF =  poly4.Eval(0.f);
-				
-				if(tempF > 0) roots.x = 0.f;
-				else
-				for(float j = 1; j <= count; ++j)
-				{
-					float f = poly4.Eval(j * rCount);
-					
-					if(f > 0.f)
-					{
-						// roots.x = j * rCount;
-						roots.x = binRootFinder.Eval((j - 1) * rCount, j * rCount, poly4, 10);
-						break;
-					}
-				}
-			}
-			
-			{
-				float tempF =  poly4.Eval(1.f);
-				
-				if(tempF > 0) roots.z = 1.f;
-				else
-				for(float j = count - 1; j >= 0; --j)
-				{
-					float f = poly4.Eval(j * rCount);
-					
-					if(f > 0.f)
-					{
-						// roots.z = j * rCount;
-						roots.z = binRootFinder.Eval((j + 1) * rCount, j * rCount, poly4, 10);
-						break;
-					}
-				}
-			}
-			
-			rootType = 3.f;
-		}
-		//endregion
-		
+
 		// roots.z = binRootFinder.Eval(ival.x, d1Roots.z, poly4);
 		
 		// roots = saturate(roots);
 		
 		float err = 0.001f;
 		
-		// if(roots.x >= 0.f && roots.x <= 1.f && abs(discrSpline.Eval(roots.x)) < err) isDpos = 1.f;
-		// if(roots.z >= 0.f && roots.z <= 1.f && abs(discrSpline.Eval(roots.z)) < err) isDpos = 1.f;
+		// if(roots.x >= 0.f && roots.x <= 1.f && abs(polyB.Eval(roots.x)) < err) isDpos = 1.f;
+		// if(roots.z >= 0.f && roots.z <= 1.f && abs(polyB.Eval(roots.z)) < err) isDpos = 1.f;
 		
-		// if(abs(discrSpline.Eval(roots.x)) < err) isDpos = 1.f;
-		// if(abs(discrSpline.Eval(roots.z)) < err) isDpos = 1.f;
+		// if(abs(polyB.Eval(roots.x)) < err) isDpos = 1.f;
+		// if(abs(polyB.Eval(roots.z)) < err) isDpos = 1.f;
 		
-		// if(discrSpline.Eval(roots.x) >= -err) isDpos = 1.f;
-		// if(discrSpline.Eval(roots.z) >= -err) isDpos = 1.f;
+		// if(polyB.Eval(roots.x) >= -err) isDpos = 1.f;
+		// if(polyB.Eval(roots.z) >= -err) isDpos = 1.f;
 		// if(qSplineIDist.Eval(roots.x) < 0.f) isDpos = 0.f;
 		
 		// if(roots.x > 0.9f || roots.x < 0.f) isDpos = 0.f;
@@ -458,117 +454,44 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 		
 		//region finalize
 		{
-		
-			//region minFinder
-			OFUNC(minFinder, INull,
-			float Eval(float a, float b, IEVAL(float, (float), 1) func, uint count, float count2 = 3.f)
-			{
-				float steps = 1.f / count2;
-				float t = 10000.f;
-				float l0 = 0.f;
-				float l = 0.f;
-				float l1 = 0.f;
-				
-				
-				for(uint j = 0; j < count; ++j)
-				{
-					bool blob = false;
-					t = 10000.f;
-					l = l0;
-					l1 = l0;
-					
-					for(float i = 0.f; i <= count2; ++i)
-					// for(float i = count; i >= 0.f; --i)
-					{
-						float tempL = lerp(a, b, steps * i);
-						// tempL = steps * i;
-						float tempT = func.Eval(tempL);
-						
-						if(tempT < t)
-						{
-							t = tempT;
-							
-							l0 = l;
-							l = tempL;
-							l1 = tempL;
-							
-							blob = true;
-						}
-						else
-						{
-							if(blob) l1 = tempL;
-							blob = false;
-						}
-					}
-					
-					// 
-					a = l0;
-					b = l1;
-				}
-				
-				return l;
-			})
-			//endregion
-			float l, l2;
+			float l1, l2;
 			
 			// roots.x = rootsAlt.x = 0.f;
 			// roots.z = rootsAlt.z = 1.f;
 			// rootType = 3.f;
 			
-			// l = minFinder.Eval(roots.x, roots.z, qSplineIDist, 2, 20);
-			l = binRootFinder.Eval(roots.x, roots.z, qSplineD1, 10);
-				  // l = saturate(l);
-			
-			l2 = binRootFinder.Eval(rootsAlt.x, rootsAlt.z, qSplineD1, 10);
+
 			// l2 = saturate(l2);
+			const uint count = 10;
 			
 			// if(0)
 			if(rootType == 3.f)
 			{
-				const uint count = 10;
-				
 				float rootD3 = binRootFinder.Eval(roots.x, roots.z, qSplineD3, count);
 				
 				float2 rootsD2;
 				rootsD2.x = binRootFinder.Eval(rootD3, roots.x, qSplineD2, count);
 				rootsD2.y = binRootFinder.Eval(rootD3, roots.z, qSplineD2, count);
 				
-				l = binRootFinder.Eval(roots.x, rootsD2.x, qSplineD1, count);
+				l1 = binRootFinder.Eval(roots.x, rootsD2.x, qSplineD1, count);
 				l2 = binRootFinder.Eval(rootsD2.y, roots.z, qSplineD1, count);
 			}
+			else
+			{
+				l1 = binRootFinder.Eval(roots.x, roots.z, qSplineD1, count);
+				l2 = binRootFinder.Eval(rootsAlt.x, rootsAlt.z, qSplineD1, count);
+			}
 			
-			float t = qSplineIDist.Eval(l);
+			float t = qSplineIDist.Eval(l1);
 			float t2 = qSplineIDist.Eval(l2);				
 			
 			if(t2 < t)
 			{
-				t = t2; l = l2;
+				t = t2; l1 = l2;
 			}
 			
 			
-			// t = t < t2 ? t : t2;
-			
-			// if(0)
-			// for(float i = 0.f; i <= count; ++i)
-			// {
-				// float tempL = lerp(l0, l1, steps * i);
-
-				// float tempT = qSplineIDist.Eval(tempL);
-				
-				// if(tempT < t)
-				// {
-					// t = tempT;
-					// l = tempL;
-				// }
-			// }
-			// if(t < 0.f) fCol = 0.f;
-			// l = (roots.x + roots.z) * 0.5f;
-			// l = 0.f;
-			// t = qSplineIDist.Eval(l);
-			
-			
-			
-			float3 sp = qSpline.Eval(l);
+			float3 sp = qSpline.Eval(l1);
 			sp = mul(sp, rayMat); sp += rayStart;
 			
 			float3 ip = rayStart + rayDir * t;
@@ -600,12 +523,6 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 		
 	}
 	//endregion
-	
-	// float discr = d2.y * r2 + d2.z * r2 - d2.z * s2.y + 2.f * d.y * d.z * s.y * s.z - d2.y * s2.z;
-	// discr = 0.f;
-	// float2 l2 = (-d.y * s.y - d.z * s.z + sqrt(discr) * float2(-1.f, 1.f)) / (d2.y + d2.z);
-	
-	// isDpos = discrSpline.Eval(0) >= 0.f;
 	
 
 	

@@ -571,6 +571,29 @@ float3 PS( PS_IN In ) : SV_Target
 			// return fCol;
 		}
 		
+		//region polyTest
+		if(0)
+		{
+			float2 uv = fuv; uv.y = 1.f - uv.y;
+			// uv.x += 
+			uv.y = MapTo(uv.y, -1.f, 1.f);
+			uv.x = MapTo(uv.x, -1.f, 1.f);
+			uv *= 2.f;
+			
+			fCol = 0.f;
+			fCol = lerp(saturate(fCol), 1.f, Draw::CoordSys(uv));
+
+			float c[4] = {0.1, -0.5, 1.2, 0.8};
+			Poly3 poly4 = Poly3::New(c);
+			
+			fCol = lerp(fCol, Col3::G, Draw::Curve(uv, poly4));
+			fCol = lerp(fCol, Col3::R, Draw::Curve(uv, poly4.New(1)));
+			fCol = lerp(fCol, Col3::B, Draw::Curve(uv, poly4.New(2)));
+			
+			return GammaEncode(fCol);
+		}
+		//endregion
+		
 				// if(0)
 		struct QSplineIn
 		{
@@ -617,8 +640,8 @@ float3 PS( PS_IN In ) : SV_Target
 		OFUNC(cSpline, INull,
 		float3 Eval(float3 c1, float3 t1, float3 c2, float3 t2, float l)
 		{
-			float3 h1 = c1 + t1;
-			float3 h2 = c2 - t2;
+			float3 h1 = c1 + t1 * 0.333f;
+			float3 h2 = c2 - t2 * 0.333f;
 		
 			float3 h =  lerp(h1, h2, l);
 			
@@ -662,9 +685,9 @@ float3 PS( PS_IN In ) : SV_Target
 		
 		CSplineIn cspIn = CSplineIn::New(
 						float3(-2.f, 0.f + height, 0.f), 
-						float3(2.f, 4.f, 4.f), 
+						float3(2.f, 4.f, 4.f)*2.f, 
 						float3(2.f, 0.f + height, 0.f), 
-						float3(-2.f, -4.f, 4.f),
+						float3(-2.f, -4.f, 4.f)*2.f,
 						0.33f);
 		
 		float3 hPos = float3(0.f, 0.f, 0.f);
@@ -690,7 +713,7 @@ float3 PS( PS_IN In ) : SV_Target
 								// float3(2.f, 0.f, 0.f), 
 								// hPos + hTan * 0.5f, 
 								// 0.33f);
-								
+		
 		QSplineIn spIns[2];
 		{
 			float3 c1 = cspIn.c1;
@@ -698,14 +721,17 @@ float3 PS( PS_IN In ) : SV_Target
 			float3 t1 = cspIn.t1;
 			float3 t2 = cspIn.t2;
 			
-			P3D3 foo = cSpline2.Eval(c1, t1, c2, t2, 1.0f);
+			// P3D3 foo = cSpline2.Eval(c1, t1, c2, t2, 1.0f);
+			
+			// c2 = cSpline.Eval(c1, t1, c2, t2, 0.5f);
+			// t2 = (-3.f * c1 * 0.5f) + (3.f * c2 * 0.5) - (t1 * 0.25f) - (t2 * 0.25f);
 			
 			// c2 = foo.p;
 			// t2 = foo.d;
 			// t2 = 0.f;
 			
-			float3 h1 = c1 + t1 * 0.8f;
-			float3 h2 = c2 - t2 * 0.8f;
+			float3 h1 = c1 + t1 * 0.5f;
+			float3 h2 = c2 - t2 * 0.5f;
 			// float3 hvec = h2 - h1;
 			float3 h = (h2 + h1) * 0.5f;
 			float3 ht = (h2 - h1) * 0.5f;
@@ -720,30 +746,30 @@ float3 PS( PS_IN In ) : SV_Target
 		
 		// uint count = ray.Start.x != 0.f ? 2 : 0;
 		
-		// return EvalSplineISect(ray.Start, ray.Dir, 
-								// spIns[0].c1, 
-								// spIns[0].c2, 
-								// spIns[0].h, 
-								// spIns[0].r).Col;
+		return EvalSplineISect(ray.Start, ray.Dir, 
+								spIns[0].c1, 
+								spIns[0].c2, 
+								spIns[0].h, 
+								spIns[0].r).Col;
 		
-		[loop]
-		for(uint i = 0; i < 2; ++i)
-		{
-			Hit spHit = EvalSplineISect(ray.Start, ray.Dir, 
-			spIns[i].c1, 
-			spIns[i].c2, 
-			spIns[i].h, 
-			spIns[i].r);
+		// [loop]
+		// for(uint i = 0; i < 0; ++i)
+		// {
+			// Hit spHit = EvalSplineISect(ray.Start, ray.Dir, 
+			// spIns[i].c1, 
+			// spIns[i].c2, 
+			// spIns[i].h, 
+			// spIns[i].r);
 			
-			if(spHit.Depth < fD)
-			{
-				fD = spHit.Depth;
-				fCol = spHit.Col;
-			}
-		}
+			// if(spHit.Depth < fD)
+			// {
+				// fD = spHit.Depth;
+				// fCol = spHit.Col;
+			// }
+		// }
 		
 		// return fCol;
-		return GammaEncode(fCol);
+		// return GammaEncode(fCol);
 		
 		// fCol = 0.f;
 		// fD = 99999999.f;
