@@ -23,6 +23,7 @@ cbuffer generalInfoCB : register(b1)
 	float Zoom : packoffset(c0.z);
 	float Time : packoffset(c0.w);
 	float3 Mouse : packoffset(c1);
+	float2 Cursor : packoffset(c2);
 };
 
 PS_IN VS( VS_IN In )
@@ -37,7 +38,10 @@ PS_IN VS( VS_IN In )
 	
 	return Out;
 }
-
+// float EvalPoly(float x, float c0, float c1, float c2, float c3, float c4, float c5, float c6)
+// {
+	// return 0.0;
+// }
 
 #include<Shaders/const.fx>
 #include<Shaders/utils.fx>
@@ -63,7 +67,7 @@ float3 GetOrthoVec(float3 v)
     return abs(v.x) > abs(v.z) ? float3(-v.y, v.x, 0.0f) : float3(0.0f, -v.z, v.y);
 }
 
-#include<Shaders/spline.fx>
+
 
 
 float EvalChecker(float2 pos)
@@ -201,6 +205,23 @@ struct Intrsect
 	}
 };
 
+float3 EvalQSpline(float3 c1, float3 c2, float3 h, float l)
+{
+	return lerp(lerp(c1, h, l), lerp(h, c2, l), l);
+}
+
+float EvalQSpline(float c1, float c2, float h, float l)
+{
+	return lerp(lerp(c1, h, l), lerp(h, c2, l), l);
+}
+
+float3 EvalQSplineD1(float3 c1, float3 c2, float3 h, float l)
+{
+	return 2.0 * (h + c1 * (l - 1.0) + c2 * l - 2.0 * h * l);
+}
+
+// #include<Shaders/spline2.fx>
+#include<Shaders/spline.fx>
 
 float2 SampleDisk(float2 h)
 {
@@ -426,7 +447,7 @@ float3 PS( PS_IN In ) : SV_Target
 		// Ray ray = cam.CreateRay(uv, i, time, PixelCount);
 		
 		float t0 = 1000000.f;
-		// if(0)
+		if(0)
 		{
 			float3x3 rayMat;
 			rayMat[0] = ray.Dir;
@@ -746,11 +767,283 @@ float3 PS( PS_IN In ) : SV_Target
 		
 		// uint count = ray.Start.x != 0.f ? 2 : 0;
 		
-		return EvalSplineISect(ray.Start, ray.Dir, 
-								spIns[0].c1, 
-								spIns[0].c2, 
-								spIns[0].h, 
-								spIns[0].r).Col;
+		//region
+		if(0)
+		{
+			float c0 = -0.4; //0
+			float c1 = 2.2; //3
+			float c2 = 1.0; //2
+			float c3 = -1.5; //1
+			
+			float2 uv = fuv; uv.y = 1.f - uv.y;
+			// uv.x += 
+			uv.y = MapTo(uv.y, -1.f, 1.f);
+			uv.x = MapTo(uv.x, -1.f, 1.f);
+			uv *= 4.f;
+			
+			Cmplx a[4];
+			Cmplx wn = cmplxAng(Pi2 * 0.25);
+			Cmplx w = cmplx(1.0);
+			
+			for(uint i = 0; i < 4; ++i)
+			{
+				a[i] = EvalPoly(w, cmplx(c0), cmplx(c1), cmplx(c2), cmplx(c3));
+				
+				w = w.Mul(wn);
+			}
+			// a[2] = cmplx(EvalPoly(2.0, c0, c1, c2, c3));
+			// a[3] = cmplx(EvalPoly(3.0, c0, c1, c2, c3));
+			
+			Cmplx y[4];
+			
+			EvalFFT4(a, y);
+			
+			c0 = y[0].r * 0.25;
+			c1 = y[1].r * 0.25;
+			c2 = y[2].r * 0.25;
+			c3 = y[3].r * 0.25;
+			// c2 = y[2].r * 0.25;
+			
+			// c3 = y[3].r * 0.25;
+			// c3 = 0.0;
+			
+			fCol = lerp(saturate(fCol), 1.0, Draw::CoordSys(uv));
+			fCol = lerp(fCol, Col3::G, Draw::Poly(uv, c0, c1, c2, c3));
+			// fCol = lerp(fCol, Col3::R, Draw::CircleS(uv, float2(1.0, EvalPoly(1.0, c0, c1)), 2));
+			// fCol = lerp(fCol, Col3::R, Draw::CircleS(uv, float2(1.0, EvalPoly(1.0, c0, c1, c2, c3)), 2));
+			// fCol = lerp(fCol, Col3::R, Draw::CircleS(uv, float2(1.0, EvalPoly(cmplx(1.0), y[0], y[1], y[2], y[3]).i), 2));
+
+			return GammaEncode(fCol);
+		}
+		//endregion
+		
+		//region
+		if(0)
+		{
+			float c0 = 0.4; //0
+			float c1 = 1.0; //3
+			float c2 = 0.0; //2
+			float c3 = -1.0; //1
+			float c4 = 0.5; //1
+			float c5 = 1.0; //1
+			float c6 = -.5; //1
+			
+			float2 uv = fuv; uv.y = 1.f - uv.y;
+			// uv.x += 
+			uv.y = MapTo(uv.y, -1.f, 1.f);
+			uv.x = MapTo(uv.x, -1.f, 1.f);
+			uv *= 4.f;
+			
+			Cmplx a[8];
+			Cmplx wn = cmplxAng(Pi2 * 0.125);
+			Cmplx w = cmplx(1.0);
+				
+			for(uint i = 0; i < 8; ++i)
+			{
+				a[i] = EvalPoly(w, cmplx(c0), cmplx(c1), cmplx(c2), cmplx(c3), cmplx(c4), cmplx(c5), cmplx(c6));
+				
+				w = w.Mul(wn);
+			}
+			// a[2] = cmplx(EvalPoly(2.0, c0, c1, c2, c3));
+			// a[3] = cmplx(EvalPoly(3.0, c0, c1, c2, c3));
+			
+			Cmplx y[8];
+			
+			EvalFFT8(a, y);
+			
+			OFUNC(poly, IEVAL(float, (float), 1),
+			float Eval(float l)
+			{
+				return EvalPoly(cmplx(l), cmplx(c0), cmplx(c1), cmplx(c2), cmplx(c3), cmplx(c4), cmplx(c5), cmplx(c6)).r;
+			})		
+			// if(abs(y[].r) > 0.01) return 1.0;
+			// c3 = y[3].r * 0.125f;
+			// c0 = y[0].r * 0.25;
+			// c1 = y[1].r * 0.25;
+			// c2 = y[2].r * 0.25;
+			// c2 = y[2].r * 0.25;
+			
+			// c3 = y[3].r * 0.25;
+			// c3 = 0.0;
+			
+			fCol = lerp(saturate(fCol), 1.0, Draw::CoordSys(uv));
+			fCol = lerp(fCol, Col3::G, Draw::Poly(uv, c0, c1, c2, c3, c4, c5, c6));
+			fCol = lerp(fCol, Col3::R, Draw::Poly(uv, y[0].r * 0.125f, y[1].r * 0.125f, y[2].r * 0.125f, y[3].r * 0.125f, y[4].r * 0.125f, y[5].r * 0.125f, y[6].r * 0.125f));
+			// fCol = lerp(fCol, Col3::R, Draw::Curve(uv, poly));
+			// fCol = lerp(fCol, Col3::R, Draw::CircleS(uv, float2(1.0, EvalPoly(1.0, c0, c1)), 2));
+			// fCol = lerp(fCol, Col3::R, Draw::CircleS(uv, float2(1.0, EvalPoly(1.0, c0, c1, c2, c3)), 2));
+			// fCol = lerp(fCol, Col3::R, Draw::CircleS(uv, float2(1.0, EvalPoly(cmplx(1.0), y[0], y[1], y[2], y[3]).i), 2));
+
+			// return GammaEncode(fCol);
+		}
+		//endregion
+		
+		//region
+		if(0)
+		{
+			float3 c1 = float3(0.5, -0.5, 0.0);
+			float3 c2 = float3(2.0, -1.0, 0.0);
+			float3 h  = float3(1.0, 3.0, 0.0);
+			float  r  = 0.75;
+			float  r2 = r * r;
+			
+			float o = -0.5;
+			c1.y += o; c2.y += o; h.y += o; 
+			
+			OFUNC(fooPoly, IEVAL(Cmplx, (Cmplx), 1),
+			Cmplx Eval(Cmplx l)
+			{
+				// l = l.Mul(0.25).Add(0.5);
+				
+				float3 a = c1;
+				float3 b = 2.0 * (h - c1);
+				float3 c = c1 + c2 - 2.0 * h;
+				
+				float rs = 0.25;
+				float rh = 0.8;
+				float rt = 0.33;
+				
+				float ra = rs;
+				float rb = 2.0 * (rh - rs);
+				float rc = rs + rt - 2.0 * rh;
+				
+				Cmplx px = EvalPoly(l, cmplx(a.x), cmplx(b.x), cmplx(c.x));
+				Cmplx py = EvalPoly(l, cmplx(a.y), cmplx(b.y), cmplx(c.y));
+				Cmplx pz = EvalPoly(l, cmplx(a.z), cmplx(b.z), cmplx(c.z));
+				
+				Cmplx tx = EvalPoly(l, cmplx(b.x), cmplx(2.0 * c.x));
+				Cmplx ty = EvalPoly(l, cmplx(b.y), cmplx(2.0 * c.y));
+				Cmplx tz = EvalPoly(l, cmplx(b.z), cmplx(2.0 * c.z));
+
+				return Pow2(py.Mul(ty).Add(pz.Mul(tz)).Neg()).Add(
+				Pow2(py.Mul(tx))).Add(Pow2(pz.Mul(tx))).Sub((cmplx(r2).Mul(Pow2(tx))));
+			})
+			
+			const uint n = 8.0;
+			Cmplx a[n];
+			Cmplx wn = cmplxAng(Pi2 * 0.125);
+			Cmplx w = cmplx(1.0);
+			
+			for(uint i = 0; i < n; ++i)
+			{
+				a[i] = fooPoly.Eval(w);
+				
+				w = w.Mul(wn);
+			}
+
+			Cmplx y[n];			
+			EvalFFT8(a, y);
+			
+			float c[n];
+
+			for(uint i = 0; i < n; ++i)
+			c[i] = y[i].r * 0.125;
+			
+			// c3 = y[3].r * 0.25;
+			// c3 = 0.0;
+			
+			float2 uv = fuv; uv.y = 1.f - uv.y;
+			// uv.x += 
+			uv.y = MapTo(uv.y, -1.f, 1.f);
+			uv.x = MapTo(uv.x, -1.f, 1.f);
+			uv *= 2.f;
+			
+			OFUNC(fooPolyR, IEVAL(float, (float), 1),
+			float Eval(float l)
+			{
+				return fooPoly.Eval(cmplx(l)).r;
+			})
+			
+			fCol = lerp(saturate(fCol), 1.0, Draw::CoordSys(uv));
+			fCol = lerp(fCol, Col3::R, Draw::Poly(uv, c[0], c[1], c[2], c[3], c[4], c[5], c[6]));
+			fCol = lerp(fCol, Col3::B, Draw::Curve(uv, fooPolyR));
+			// fCol = lerp(fCol, Col3::R, Draw::CircleS(uv, float2(1.0, EvalPoly(1.0, c0, c1)), 2));
+			// fCol = lerp(fCol, Col3::R, Draw::CircleS(uv, float2(1.0, EvalPoly(1.0, c0, c1, c2, c3)), 2));
+			// fCol = lerp(fCol, Col3::R, Draw::CircleS(uv, float2(1.0, EvalPoly(cmplx(1.0), y[0], y[1], y[2], y[3]).i), 2));
+
+			return GammaEncode(fCol);
+		}
+		//endregion
+		
+		//region 
+		if(0)
+		{
+			float3 c1 = float3(0.5, -0.5, 0.0);
+			float3 c2 = float3(2.0, -1.0, 0.0);
+			float3 h  = float3(1.0, 3.0, 0.0);
+			float  r  = 0.75;
+			float  r2 = r * r;
+			
+			float o = -0.5;
+			c1.y += o; c2.y += o; h.y += o; 
+			
+			OFUNC(fooPoly, IEVAL(float, (float), 1),
+			float Eval(float l)
+			{
+				float3 p = EvalQSpline(c1, c2, h, l);
+				float3 t = EvalQSplineD1(c1, c2, h, l);
+				
+				float pt = dot(p, t);
+				float tx2 = t.x * t.x;
+
+				// return ((-2.0 * p.x * (pt / t.x) * tx2 + Pow2(pt) + dot(p, p) * tx2) - r2 * tx2);
+				return (-2.0 * p.x * pt * t.x + Pow2(pt) + dot(p, p) * tx2 - r2 * tx2);
+
+				// return (SqrLen(p - float3(pt / t.x, 0.0, 0.0)) - r2) * (t.x * t.x);
+				return SqrLen(p - float3(pt / t.x, 0.0, 0.0)) - r2;
+				return (-2.0 * p.x * pt + pt * pt + dot(p, p) - r2) * (t.x * t.x);
+			})
+		
+			float2 uv = fuv; uv.y = 1.f - uv.y;
+			// uv.x += 
+			uv.y = MapTo(uv.y, -1.f, 1.f);
+			uv.x = MapTo(uv.x, -1.f, 1.f);
+			uv *= 2.f;
+			
+			fCol = lerp(saturate(fCol), 1.0, Draw::CoordSys(uv));
+			fCol = lerp(fCol, Col3::G, Draw::Curve(uv, fooPoly));
+
+			return GammaEncode(fCol);
+		}
+		//endregion
+		
+		{			
+			float3 col = EvalSplineISect(ray.Start, ray.Dir, spIns[0].c1, spIns[0].c2, spIns[0].h, spIns[0].r).Col;
+			// float3 col = 0.0;
+			
+			Hit graph = Hit::New();
+			{
+				float2 uv0 = float2(256.0, 256.0);
+				uv0 = Cursor;
+				Ray ray = cam.CreateRay(uv0, PixelCount);
+			
+				col = lerp(saturate(col), Col3::M, Draw::CircleS(uv, Cursor, 3.0)); 
+
+				float2 uv = fuv; uv.y = 1.f - uv.y;
+
+				// uv.y = MapTo(uv.y, -1.f, 1.f);
+				// uv.x = MapTo(uv.x, -1.f, 1.f);
+				// uv *= 3.0;
+				uv.y = MapTo(uv.y, -0.5, 1.5);
+				uv.x = MapTo(uv.x, -0.5, 1.5);
+				
+				col = lerp(saturate(col), 1.0, Draw::CoordSys(uv));
+				
+				uv.y *= 16.0;
+				// uv.y *= 64.0;
+				// uv.y *= 128.0;
+				// uv.y *= 4.0;
+				
+				graph = EvalSplineISect(ray.Start, ray.Dir, spIns[0].c1, spIns[0].c2, spIns[0].h, spIns[0].r, 1.0, uv);
+			}
+			
+			float mx = max(graph.Col.r, max(graph.Col.g, graph.Col.b));
+			if(mx > 0.0) graph.Col /= mx;
+			// return lerp(0.1, Col3::R, Draw::CircleS(uv, Cursor * 1, 2.0));
+			return lerp(col, graph.Col, mx);
+			// return lerp(col, graph.Col / graph.Mask, graph.Mask);
+			// return col;
+		}
 		
 		// [loop]
 		// for(uint i = 0; i < 0; ++i)
@@ -771,8 +1064,8 @@ float3 PS( PS_IN In ) : SV_Target
 		// return fCol;
 		// return GammaEncode(fCol);
 		
-		// fCol = 0.f;
-		// fD = 99999999.f;
+		fCol = 0.f;
+		fD = 99999999.f;
 
 
 		float sphCount = 40.f;

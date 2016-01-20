@@ -120,10 +120,52 @@ struct Hit
 };
 
 
+struct Ply2
+{
+	float A, B, C;
+	
+	static Ply2 New(float a, float b, float c)
+	{
+		Ply2 p; p.A = a; p.B = b; p.C = c;
+		
+		return p;
+	}
+};
 
-Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3 h, float r = 0.25f, uint mode = 0)
+struct Ply4
+{
+	float A, B, C, D, E;
+	
+	static Ply4 New(float a, float b, float c, float d, float e)
+	{
+		Ply4 p; p.A = a; p.B = b; p.C = c; p.D = d; p.E = e;
+		
+		return p;
+	}
+};
+
+
+Ply4 Pow2i(Ply2 p)
+{
+	return Ply4::New(p.A * p.A, 2.0 * p.A * p.B, p.B * p.B + 2.0 * p.A * p.C, 2.0 * p.B * p.C, p.C * p.C);
+}
+
+
+Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3 h, float r = 0.25f, uint mode = 0, float2 uv = 0.0)
 {
 	Hit hit = Hit::New();
+	
+	float rs = 0.125;
+	float rh = 2.0;
+	float rt = 0.125;
+	
+	// float rs = 0.25;
+	// float rh = 0.8;
+	// float rt = 0.33;
+	
+	// c1 = 0.0;
+	// c2 = float3(2.0, 0.0, 0.0);
+	// h = float3(1.0, 2.0, 0.0);
 	
 	float3x3 rayMat;
 	rayMat[0] = rayDir;
@@ -174,11 +216,17 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 		c1.x + c2.x - 2.f * h.x
 	};
 	
-	Poly2 polyA = Poly2::New(polyA_C);
+	// Poly2 polyA = Poly2::New(polyA_C);
+	
+	float ra = rs;
+	float rb = 2.0 * (rh - rs);
+	float rc = rs + rt - 2.0 * rh;
+	
+	Ply4 rad = Pow2i(Ply2::New(ra, rb, rc));
 	
 	float polyB_C[5] = 
 	{
-		-c1_2.y - c1_2.z + r2,
+		-c1_2.y - c1_2.z,
 		
 		4.f * c1_2.y + 4.f * c1_2.z - 4.f * c1.y * h.y - 4.f * c1.z * h.z,
 		
@@ -192,19 +240,81 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 		4.f * c1.y * h.y + 4.f * c2.y * h.y - 4.f * h2.y + 4.f * c1.z * h.z + 4.f * c2.z * h.z - 4.f * h2.z,
 	};
 	
-	Poly4 polyB = Poly4::New(polyB_C);
+	polyB_C[0] += rad.A;
+	polyB_C[1] += rad.B;
+	polyB_C[2] += rad.C;
+	polyB_C[3] += rad.D;
+	polyB_C[4] += rad.E;
+	
+	// float polyB_C[5] = 
+	// {
+		// -c1_2.y - c1_2.z + r2,
+		
+		// 4.f * c1_2.y + 4.f * c1_2.z - 4.f * c1.y * h.y - 4.f * c1.z * h.z,
+		
+		// -6.f * c1_2.y - 6.f * c1_2.z - 2.f * c1.y * c2.y - 2.f * c1.z * c2.z + 
+		// 12.f * c1.y * h.y - 4.f * h2.y + 12.f * c1.z * h.z - 4.f * h2.z,
+		
+		// 4.f * c1_2.y + 4.f * c1_2.z + 4.f * c1.y * c2.y + 4.f * c1.z * c2.z - 
+		// 12.f * c1.y * h.y - 4.f * c2.y * h.y + 8.f * h2.y - 12.f * c1.z * h.z - 4.f * c2.z * h.z + 8.f * h2.z,
+		
+		// -c1_2.y - c1_2.z - 2.f * c1.y * c2.y - c2_2.y - 2.f * c1.z * c2.z - c2_2.z + 
+		// 4.f * c1.y * h.y + 4.f * c2.y * h.y - 4.f * h2.y + 4.f * c1.z * h.z + 4.f * c2.z * h.z - 4.f * h2.z,
+	// };
+	
+	// Poly4 polyB = Poly4::New(polyB_C);
+	
+	//region polys
+	OFUNC(polyAD0, IEVAL(float, (float), 1),
+	float Eval(float x)
+	{
+		return EvalPoly(x, polyA_C[0], polyA_C[1], polyA_C[2]);
+	})
+	
+	OFUNC(polyAD1, IEVAL(float, (float), 1),
+	float Eval(float x)
+	{
+		return EvalPoly(x, polyA_C[1], polyA_C[2] * 2.0);
+	})
+	
+	OFUNC(polyAD2, IEVAL(float, (float), 1),
+	float Eval(float x)
+	{
+		return EvalPoly(x, polyA_C[2] * 2.0);
+	})
+	
+	
+	OFUNC(polyBD0, IEVAL(float, (float), 1),
+	float Eval(float x)
+	{
+		return EvalPoly(x, polyB_C[0], polyB_C[1], polyB_C[2], polyB_C[3], polyB_C[4]);
+	})
+	
+	OFUNC(polyBD1, IEVAL(float, (float), 1),
+	float Eval(float x)
+	{
+		return EvalPoly(x, polyB_C[1], polyB_C[2] * 2.0, polyB_C[3] * 3.0, polyB_C[4] * 4.0);
+	})
+	
+	OFUNC(polyBD2, IEVAL(float, (float), 1),
+	float Eval(float x)
+	{
+		return EvalPoly(x, polyB_C[2] * 2.0, polyB_C[3] * 6.0, polyB_C[4] * 12.0);
+	})
+	
+	OFUNC(polyBD3, IEVAL(float, (float), 1),
+	float Eval(float x)
+	{
+		return EvalPoly(x, polyB_C[3] * 6.0, polyB_C[4] * 24.0);
+	})
+	//endregion
 	
 	
 	OFUNC(qSplineIDist, IEVAL(float, (float), 1),
 	float Eval(float l)
-	{
-		float term = l*l * (c1.x + c2.x - 2.f * h.x) + l * (-2.f * c1.x + 2.f * h.x) + c1.x;
-		
-		float discr = polyB.Eval(l);
-		// discr = max(0.f, discr);
-		
-		term = polyA.Eval(l);
-		discr = polyB.Eval(l);
+	{		
+		float term = polyAD0.Eval(l);
+		float discr = polyBD0.Eval(l);
 		
 		if(discr < 0.f)
 		return 999999.f;
@@ -216,10 +326,10 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 	float Eval(float t)
 	{	 		
 		//D[1][f1][x]*2 Sqrt[f2[x]] + D[1][f2][x]
-		float f1D1 = polyA.Eval(t, 1);
+		float f1D1 = polyAD1.Eval(t);
 		
-		float f2 = polyB.Eval(t);
-		float f2D1 = polyB.Eval(t, 1);
+		float f2 = polyBD0.Eval(t);
+		float f2D1 = polyBD1.Eval(t);
 		
 		// return f1D1 * 2.f * sqrt(max(0.f, f2)) - f2D1;
 		return f1D1 - f2D1 * 0.5f * rsqrt(max(0.f, f2));
@@ -228,12 +338,12 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 	OFUNC(qSplineD2, IEVAL(float, (float), 1),
 	float Eval(float t)
 	{		
-		float f1D1 = polyA.Eval(t, 1);
-		float f1D2 = polyA.Eval(t, 2);
+		float f1D1 = polyAD1.Eval(t);
+		float f1D2 = polyAD2.Eval(t);
 		
-		float f2 = polyB.Eval(t);
-		float f2D1 = polyB.Eval(t, 1);
-		float f2D2 = polyB.Eval(t, 2);
+		float f2 = polyBD0.Eval(t);
+		float f2D1 = polyBD1.Eval(t);
+		float f2D2 = polyBD2.Eval(t);
 		
 		f2 = max(0.f, f2);
 
@@ -246,10 +356,10 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 	OFUNC(qSplineD3, IEVAL(float, (float), 1),
 	float Eval(float t)
 	{	
-		float f2 = polyB.Eval(t);
-		float f2D1 = polyB.Eval(t, 1);
-		float f2D2 = polyB.Eval(t, 2);
-		float f2D3 = polyB.Eval(t, 3);
+		float f2 = polyBD0.Eval(t);
+		float f2D1 = polyBD1.Eval(t);
+		float f2D2 = polyBD2.Eval(t);
+		float f2D3 = polyBD3.Eval(t);
 		
 		f2 = max(0.f, f2);	   
 	   
@@ -276,9 +386,6 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 	// if(0)
 	{
 		isDpos = 0.f;
-
-		float2 ival = float2(0.f, 1.f);
-		// ival = float2(-r, 1.f + r);		
 		
 		OFUNC(quadPolyRoots, INull,
 		float2 Eval(float c, float b, float a)
@@ -315,7 +422,10 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 			return (n + p) * 0.5f;
 		})
 		
-		float2 d2Roots = quadPolyRoots.Eval(polyB.C[2], 3.f * polyB.C[3], 6.f * polyB.C[4]);
+		float2 ival = float2(0.f, 1.f);
+		// ival = float2(-r, 1.f + r);		
+		
+		float2 d2Roots = quadPolyRoots.Eval(polyB_C[2], 3.0 * polyB_C[3], 6.0 * polyB_C[4]);// normalized by smallest coeff-factor
 		
 		// ival.x = min(ival.x, d2Roots.x);
 		// ival.y = max(ival.y, d2Roots.y);
@@ -327,18 +437,23 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 		
 		float3 d1Roots = 0.f;
 		
-		d1Roots.x = binRootFinder.Eval(d2Roots.x, ival.x, polyB.New(1), iCount1);
-		d1Roots.y = binRootFinder.Eval(d2Roots.x, d2Roots.y, polyB.New(1), iCount1);
-		d1Roots.z = binRootFinder.Eval(ival.y, d2Roots.y, polyB.New(1), iCount1);
+		d1Roots.x = binRootFinder.Eval(d2Roots.x, ival.x, polyBD1, iCount1);
+		d1Roots.y = binRootFinder.Eval(d2Roots.x, d2Roots.y, polyBD1, iCount1);
+		d1Roots.z = binRootFinder.Eval(ival.y, d2Roots.y, polyBD1, iCount1);
+		
+		// d1Roots.z = binRootFinder.Eval(d2Roots.x, ival.y, polyBD1, iCount1);
+		// d1Roots.y = binRootFinder.Eval(d2Roots.x, d2Roots.y, polyBD1, iCount1);
+		// d1Roots.x = binRootFinder.Eval(ival.x, d2Roots.y, polyBD1, iCount1);
+		// d1Roots.x = d2Roots.x;
 		
 		float3 fd;
-		fd.x = polyB.Eval(d1Roots.x);
-		fd.y = polyB.Eval(d1Roots.y);
-		fd.z = polyB.Eval(d1Roots.z);
+		fd.x = polyBD0.Eval(d1Roots.x);
+		fd.y = polyBD0.Eval(d1Roots.y);
+		fd.z = polyBD0.Eval(d1Roots.z);
 		
 		float2 fd0;
-		fd0.x = polyB.Eval(ival.x);
-		fd0.y = polyB.Eval(ival.y);
+		fd0.x = polyBD0.Eval(ival.x);
+		fd0.y = polyBD0.Eval(ival.y);
 		
 		float2 fdT;
 		fdT.x = qSplineIDist.Eval(d1Roots.x);
@@ -392,11 +507,11 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 				}
 				
 				// if(n1 == ival.x && fd0.x > 0.f) roots.x = n1; else
-				roots.x = binRootFinder.Eval(n1, p1, polyB, iCount2);
+				roots.x = binRootFinder.Eval(n1, p1, polyBD0, iCount2);
 				// roots.x = binRootFinder.Eval(lerp(n1, p1, 0.05f), lerp(p1, n1, 0.05f), poly4, iCount2);
 				
 				// if(n2 == ival.y && fd0.y > 0.f) roots.z = n2; else
-				roots.z = binRootFinder.Eval(n2, p2, polyB, iCount2);
+				roots.z = binRootFinder.Eval(n2, p2, polyBD0, iCount2);
 				// roots.z = binRootFinder.Eval(lerp(n2, p2, 0.05f), lerp(p2, n2, 0.05f), poly4, iCount2);
 				
 				if(rootType == 2.f)
@@ -414,8 +529,8 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 						n2 = ival.y;
 					}
 						
-					rootsAlt.x = binRootFinder.Eval(n1, p1, polyB, iCount2);
-					rootsAlt.z = binRootFinder.Eval(n2, p2, polyB, iCount2);
+					rootsAlt.x = binRootFinder.Eval(n1, p1, polyBD0, iCount2);
+					rootsAlt.z = binRootFinder.Eval(n2, p2, polyBD0, iCount2);
 				}
 			}
 			
@@ -512,6 +627,52 @@ Hit EvalSplineISect(float3 rayStart, float3 rayDir, float3 c1, float3 c2, float3
 			
 		}
 		//endregion
+		
+		if(mode)
+		{
+			Hit hit = Hit::New();
+			
+			
+			float3 col = 0.0;//lerp(saturate(0.0), 1.0, Draw::CoordSys(uv));
+			// col = lerp(col, Col3::R, Draw::Curve(uv, poly));
+			// col = lerp(col, Col3::C, Draw::Poly(uv, 0.0, 0.0, 1.0));
+			col = lerp(col, Col3::G, Draw::Curve(uv, qSplineIDist) * 0.5);
+			col = lerp(col, Col3::R, Draw::Curve(uv, polyBD0) * 0.5);
+			col = lerp(col, Col3::B, Draw::Curve(uv, polyBD1) * 0.5);
+			col = lerp(col, Col3::C, Draw::Curve(uv, polyBD2) * 0.5);
+			// col = lerp(col, Col3::B, Draw::Curve(uv, polyD2));
+			// col = lerp(col, Col3::C, Draw::Curve(uv, polyD3));
+			// col = lerp(col, Col3::Y, Draw::Curve(uv, polyD4));
+			// col = lerp(col, Col3::M, Draw::Curve(uv, polyD5));
+			
+			col = lerp(col, Col3::Y, Draw::CircleS(uv, float2(roots.x, 0.0), 2.0));
+			col = lerp(col, Col3::Y, Draw::CircleS(uv, float2(roots.z, 0.0), 4.0));
+			
+			col = lerp(col, Col3::C, Draw::CircleS(uv, float2(d1Roots.x, 0.0), 6.0));
+			col = lerp(col, Col3::C, Draw::CircleS(uv, float2(d1Roots.y, 0.0), 8.0));
+			col = lerp(col, Col3::C, Draw::CircleS(uv, float2(d1Roots.z, 0.0), 10.0));
+			
+			col = lerp(col, Col3::O, Draw::CircleS(uv, float2(rootsAlt.x, 0.0), 6.0));
+			col = lerp(col, Col3::O, Draw::CircleS(uv, float2(rootsAlt.z, 0.0), 8.0));
+			
+			// col = lerp(col, Col3::G, Draw::CircleS(uv, float2(x1*4.0-2.0, poly.Eval(x1*4.0-2.0)), 4));
+			
+			// col = lerp(col, Col3::O, Draw::CircleS(uv, float2(x2*4.0-2.0, poly.Eval(x2*4.0-2.0)), 6));
+			// col = lerp(col, Col3::Y, Draw::CircleS(uv, float2(x3*4.0-2.0, poly.Eval(x3*4.0-2.0)), 8));
+			
+			// col = lerp(col, Col3::B, Draw::CircleS(uv, float2(m0_0, 0.0), 2));
+			// col = lerp(col, Col3::C, Draw::CircleS(uv, float2(m0_1, 0.0), 4));
+			
+			// col = lerp(col, Col3::B, Draw::CircleS(uv, float2(x2*4.0-2.0, 0.0), 2));
+			
+			// hit.Mask = Draw::Curve(uv, poly);
+			// hit.Mask = Draw::CoordSys(uv);
+			// hit.Col = Col3::R;
+			
+			hit.Col = col;
+			
+			return hit;
+		}
 		
 		// if(rootType.x != 3.f) fCol *= 0.75f;
 		// fCol *= rootType * 0.333f;
