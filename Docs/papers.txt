@@ -1,3 +1,157 @@
+
+Introduction
+	- scientific vis works with things
+	- to render things one can use tubes
+	- cubic tubes are nice because smooth
+	- variable radius usefull to vis things of things
+	
+	Contributions
+		- dunno
+		
+	Thesis structure
+
+Related topics
+
+	Splines and generalized cylinders
+		- what are they good for? Why nice?
+		- Cubic Hermite spline
+		- Catmull–Rom spline
+		- Bézier curves
+			- construction scheme using linear interpolations
+			- transform to points+tangents form (Hermite form)
+			- transform to polynomial in power form
+		- quadratic splines
+			- limitations, only 3 dofs, possible forms
+			- approx cubic by quadratic
+		- estimate tangents by central/forward/backward differences
+
+	Tessellation and rasterization
+		- given a mathematical description of a surface
+		- approximate surface with polygone/triangle mesh
+		- project triangles to screen and rasterize 
+		  -> convert mathematical descr. of triangle to set of fragments
+		  - usually done using the GPU
+		- GPU itself can create new triangles using the tessellation unit of the pipeline
+		- different approaches for parametric and implicit surface descriptions
+		  - parametric: derive vertex positions directly from paramters
+		  - implicit: not possible to directly infer vertex positions from formula, apply Marching Cubes & Co
+		- dynamic tessellation to ensure view independent approx quality
+
+	Ray-based rendering
+		- ray-scene intersection routine 
+		- only coherent primary rays: ray-casting
+		  -> also simulated by rasterization
+		- also non-primary, non-coherent rays: ray-tracing, path-tracing
+		  -> can not be realized using rasterization
+		
+	Rootfinding
+		- bisectioning
+		- newton
+		- + polynomial division
+		- WeiDuKe
+		- interval/affine-arithmetic		
+
+Previous Work
+
+	Rendering Tubes from Discrete Curves Using Hardware Tessellation
+		~ sequence of points define curve -> interpolated with Catmull-Rom splines
+		~ points are sent to GPU, geometry created in hull-shader/tessellator/domain-shader
+		~ approx the curve with linear segments, adaptively adds more segments in regions with large derivatives
+		~ LOD reduces only cross-section vertex count down to three (triangular cross-section)
+		~ radius is scaled up over distance to reduce aliasing 
+			~> apparently no MSAA is used in addition but AA is supposedly eliminated (?)
+			~> also no opacity reduction applied when reaching sub-pixel diameters
+		~ benchmark compares the tessellator-approach to a naive one where the geo is generated on CPU and send to GPU
+			~> strongly reduced banwidth requirements
+		~ AA approach (scaling radius) is compared to no AA
+			~> nearly no fps drop
+		
+	Rendering Generalized Cylinders using the A-Buffer
+		~ dynamic adaptive screne-space tessellation of curves with varying radii
+		~ using an A-Buffer for AA purposes (also adaptively supersamples its Phong lighting model)
+		~ software-based implementation
+		~ positions und radii are interpolated using cubic splines (Catmull-Rom)
+		~ other properties like color, opacity, reflectance are linearly interpolated 
+		~ coarse tessellation followed by length- and breadthwise refinement using different constraints
+		~ position constraint I: based on the angle between the screenspace tangent vectors of start/end-point of sub-segment
+		~ position constraint II: maintains a desired degree of linearity in the z-component
+		  ~> necessary to ensure that a curved segment is adequately subdivided even when viewed from an angle 
+			 that makes its screen pro jection close to linear (important for quality of normales and texcoords)
+		~ radius contraint: ensure smooth variation in the radius of a segment
+		~ inflection point constraint: ensures that inflection point lie between sub-segment (on their vertices)
+		~ 3 quality levels for breadthwise refinement, higher levels better approximate tube
+		  ~> chosen depending on screenspace size and quality requirements
+		~ backface culling for each segment
+		~ normal calculation must consider changing radius
+		~ high screenspace curvature can lead to ill-formed polygons
+		  ~> handled by splitting the offending polygon into an equivalent pair of triangles
+		~ variety of effects like length- and breadthwise opacity variation and a global illumination model that approx AO based 
+		on the assumption that the paintstroke (tube) is embedded in a layer of a homogeneous medium
+		~ benchmarks are pretty deprecated (thesis from 1997), render times given in ticks (s/60, still better than fps...)
+		~ overall approach appears annoyingly fiddly 
+
+	Fast Ray Tracing of Arbitrary Implicit Surfaces with Interval and Affine Arithmetic
+		- hmmmmm
+	
+	sphere/distance-bound ray-marching
+		- pretty slow, since distance is computed from roots of cubic polynomial at each step
+		- but works with smooth blending 
+		- also used by GPU-Based Hyperstreamlines for Diffusion Tensor Imaging
+	
+Tessellation based approach
+	- equidistant static tessellation on CPU
+		- expands circles of vertices at each sample point in local tangent frame defined by tangents
+	- dynamic refinement on GPU
+		- refine silhouette based on view angle
+		- refine each triangle based on screenspace sizes of edges
+		- very generic approach
+	- bulge artifacts in regions of high curvature and relatively large radius
+		- could be resolved by using a more involved base tessellation scheme
+		-> tessellate chain of capsules
+		
+Ray-based approaches
+	
+	Disk-based
+		- intersection of ray with planes/disks placed and oriented along the curve
+		- results in high-order polynomials
+		-> root finding either slow oder unreliable, or both
+		- bulge aritfacts
+	
+	Sphere-based
+		- intersection of ray with spheres placed along the curve
+		- results in t(l) = polyA - sqrt(polyB) (for front intersections)
+			- interested in global minumum (first/smalles t (ray parameter))
+		- possible to derive high-order polynomial from t(x)' 
+			- many useless roots
+			-> same perf problems as disk-based poly
+		- alternative approach: 
+			- search roots of polyB -> enclose valid/interesting regions of t(x)'
+			- search roots of t(x)' in this regions
+			- use bisectioning between extrema for robust and fast root finding
+			- necessary extrema are found as roots from derivatives
+	
+Evaluation and discussion
+	- tessellation: 
+		+ fast 
+		+ good quality, in many cases indistinguishable from ray-casting	
+		+ easy implementation (even from scratch)
+		- only primary rays
+		- bulge artifacts
+	
+	- ray-based (sphere)
+		- mediocre performance
+		+ high quality
+		+ straightforward implementation (difficult from scratch, though)
+		+ supports incoherent rays -> suitable for high quality renderings
+		+ no bulge artifacts
+
+Conclusion
+	- for interactive visualisation: tessellation
+	- high quality stills: ray-based (sphere)
+	- combine things to get a better thing
+	- further investigate things
+
+
 Quadratic Bezier - 3D: https://www.shadertoy.com/view/ldj3Wh
 Quadratic Bezier Stroke: https://www.shadertoy.com/view/XsX3zf
 -> based on http://research.microsoft.com/en-us/um/people/hoppe/ravg.pdf
@@ -5,6 +159,13 @@ https://en.wikipedia.org/wiki/Quartic_function#Ferrari.27s_solution
 
 splines/tubes:
 > 
+
+GPU-Based Hyperstreamlines for Diffusion Tensor Imaging
+http://www.visus.uni-stuttgart.de/uploads/tx_vispublications/eurovis06-reina.pdf
+
+
+Fast Ray Tracing of Arbitrary Implicit Surfaces with Interval and Affine Arithmetic
+http://www.cs.utah.edu/~knolla/cgrtia.pdf
 
 - Rendering Tubes from Discrete Curves Using Hardware Tessellation
 link: https://www.researchgate.net/publication/254311397_Rendering_Tubes_from_Discrete_Curves_Using_Hardware_Tessellation

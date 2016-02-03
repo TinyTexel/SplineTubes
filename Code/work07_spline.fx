@@ -1034,7 +1034,7 @@ float3 PS( PS_IN In ) : SV_Target
 				// uv.y *= 128.0;
 				// uv.y *= 4.0;
 				
-				graph = EvalSplineISect(ray.Start, ray.Dir, spIns[0].c1, spIns[0].c2, spIns[0].h, spIns[0].r, 1.0, uv);
+				// graph = EvalSplineISect(ray.Start, ray.Dir, spIns[0].c1, spIns[0].c2, spIns[0].h, spIns[0].r, 1.0, uv);
 			}
 			
 			float mx = max(graph.Col.r, max(graph.Col.g, graph.Col.b));
