@@ -1,0 +1,5 @@
+Tubes Count: 1701
+Segment Count: 114489
+Node Count: 116190
+Tubes Buffer Size TE: 10628244
+Tubes Buffer Size RC: 6621129

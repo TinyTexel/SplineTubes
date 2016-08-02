@@ -1,0 +1,1988 @@
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2014.10.14)  23 MAY 2016 00:55
+entering extended mode
+**compute_shader.tex
+(C:\Users\Hummel\Desktop\SplineTubesPaper\compute_shader.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, arabic, armenian, assamese, basque, bengali
+, bokmal, bulgarian, catalan, coptic, croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, galic
+ian, german, german-x-2009-06-19, greek, gujarati, hindi, hungarian, icelandic, indonesian, interlingua, irish, italian,
+ kannada, kurmanji, lao, latin, latvian, lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, ng
+erman-x-2009-06-19, nynorsk, oriya, panjabi, pinyin, polish, portuguese, romanian, russian, sanskrit, serbian, slovak, s
+lovenian, spanish, swedish, swissgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usenglishm
+ax, welsh, loaded.
+(C:\Users\Hummel\Desktop\SplineTubesPaper\egpubl.cls
+Document Class: egpubl 2013/11/28 Document Style for EG Publications v3.57
+\c@table=\count79
+\c@figure=\count80
+\c@part=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\titlespace=\skip41
+\teaserspace=\skip42
+\c@p@volume=\count87
+\bibhang=\skip43
+\every@verbatim=\toks14
+\verbatim@line=\toks15
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+(C:\Users\Hummel\Desktop\SplineTubesPaper\compute_shader.lbl)) (C:\Users\Hummel\Desktop\SplineTubesPaper\eg2015.sty)
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\subcaption.sty"
+Package: subcaption 2011/10/30 v1.1c Sub-captions (AR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\caption.sty"
+Package: caption 2011/11/10 v3.2e Customizing captions (AR)
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\caption\caption3.sty"
+Package: caption3 2011/11/01 v1.4a caption3 kernel (AR)
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+\captionmargin=\dimen102
+\captionmargin@=\dimen103
+\captionwidth=\dimen104
+\caption@indent=\dimen105
+\caption@parindent=\dimen106
+\caption@hangindent=\dimen107
+\abovecaptionskip=\skip44
+\belowcaptionskip=\skip45
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
+)
+
+Package caption Warning: Unsupported document class (or package) detected,
+(caption)                usage of the caption package is not recommended.
+See the caption package documentation for explanation.
+
+Package caption Info: \@makecaption = \long macro:#1#2->\vskip 6pt \setbox \@tempboxa \hbox {\textbf {#1:} \reset@font \
+textit {#2}} \ifdim \wd \@tempboxa >\hsize \textbf {#1:} \reset@font \itshape #2\par \else \hbox to\hsize {\hfil \box \@
+tempboxa \hfil } \fi \vskip 6pt .
+\c@ContinuedFloat=\count88
+)
+\c@subfigure=\count89
+\c@subtable=\count90
+) ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+) ("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/04/18 v1.20 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count91
+))
+\Gin@req@height=\dimen108
+\Gin@req@width=\dimen109
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
+Package: hyperref 2012/02/06 v6.82o Hypertext links for LaTeX
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty"
+Package: hobsub-hyperref 2011/04/23 v1.4 Bundle oberdiek, subset hyperref (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty"
+Package: hobsub-generic 2011/04/23 v1.4 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2011/04/23 v1.4 Subsetting bundle oberdiek (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+Package hobsub Info: Skipping package `ifpdf' (already loaded).
+Package: etexcmds 2011/02/16 v1.5 Prefix for e-TeX command names (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2011/04/07 v1.13 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Defining keys (HO)
+Package: pdftexcmds 2011/04/22 v0.16 Utilities of pdfTeX for LuaTeX (HO)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2011/04/04 v1.12 Provides string conversions (HO)
+Package: bigintcalc 2011/01/30 v1.2 Expandable big integer calculations (HO)
+Package: bitset 2011/01/30 v1.1 Data type bit set (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provides unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2011/01/30 v1.0 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/04/23 v1.7 Hooks at very end of document (HO)
+Package: atbegshi 2011/01/30 v1.15 At begin shipout hook (HO)
+Package: refcount 2010/12/01 v3.2 Data extraction from references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options of hyperref/bookmark (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2010/12/23 v3.10 Keyval support for LaTeX options (HO)
+)
+\@linkdim=\dimen110
+\Hy@linkcounter=\count92
+\Hy@pagecounter=\count93
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
+File: pd1enc.def 2012/02/06 v6.82o Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count94
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 3925.
+Package hyperref Info: Option `bookmarks' set `false' on input line 3925.
+Package hyperref Info: Hyper figures OFF on input line 4046.
+Package hyperref Info: Link nesting OFF on input line 4051.
+Package hyperref Info: Hyper index ON on input line 4054.
+Package hyperref Info: Plain pages OFF on input line 4061.
+Package hyperref Info: Backreferencing ON on input line 4064.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks OFF on input line 4290.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\backref.sty"
+Package: backref 2010/08/30 v1.36 Bibliographical back referencing
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 282.
+))
+\c@Hy@tempcnt=\count95
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\url.sty"
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4637.
+\Fld@menulength=\count96
+\Field@Width=\dimen111
+\Fld@charsize=\dimen112
+Package hyperref Info: Hyper figures OFF on input line 5757.
+Package hyperref Info: Link nesting OFF on input line 5762.
+Package hyperref Info: Hyper index ON on input line 5765.
+Package hyperref Info: backreferencing ON on input line 5770.
+Package hyperref Info: Link coloring ON on input line 5775.
+Package hyperref Info: Link coloring with OCG OFF on input line 5782.
+Package hyperref Info: PDF/A mode OFF on input line 5787.
+LaTeX Info: Redefining \ref on input line 5827.
+LaTeX Info: Redefining \pageref on input line 5831.
+\Hy@abspage=\count97
+\c@Item=\count98
+\c@Hfootnote=\count99
+)
+
+Package hyperref Message: Driver: hpdftex.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def"
+File: hpdftex.def 2012/02/06 v6.82o Hyperref driver for pdfTeX
+\Fld@listcount=\count100
+\c@bookmark@seq@number=\count101
+\Hy@SectionHShift=\skip46
+) ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1enc.sty"
+Package: t1enc 1994/06/01 Standard LaTeX package
+)
+(C:\Users\Hummel\Desktop\SplineTubesPaper\dfadobe.sty
+Package: dfadobe 2000/03/05 v1.4 T1-encoded Times (except symbols), Courier, Helvetica (at 90\%) + math package
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 14.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 14.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 14.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 15.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 15.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 15.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 16.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 16.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 16.
+\symbold=\mathgroup4
+\symitalic=\mathgroup5
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 19.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 19.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 19.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 20.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 20.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 20.
+ (C:\Users\Hummel\Desktop\SplineTubesPaper\dfT1ptm.fd
+File: dfT1ptm.fd 2000/03/05 DF - Fontinst v1.6 font definitions for T1/ptm.
+)
+(C:\Users\Hummel\Desktop\SplineTubesPaper\dfT1phv.fd
+File: dfT1phv.fd 1997/12/02 Fontinst v1.6 font definitions for T1/phv scaled to 90\%.
+) (C:\Users\Hummel\Desktop\SplineTubesPaper\dfT1pcr.fd
+File: dfT1pcr.fd 2000/03/05 DF - Fontinst v1.6 font definitions for T1/pcr.
+))
+(C:\Users\Hummel\Desktop\SplineTubesPaper\egweblnk.sty
+Package: egweblnk 2004/10/29 v2.2 DF's support for http web links in class egpubl
+) ("C:\Program Files\MiKTeX 2.9\tex\latex\cite\cite.sty"
+LaTeX Info: Redefining \cite on input line 302.
+LaTeX Info: Redefining \nocite on input line 373.
+Package: cite 2010/09/10  v 5.3
+)
+(C:\Users\Hummel\Desktop\SplineTubesPaper\compute_shader.inc
+(C:\Users\Hummel\Desktop\SplineTubesPaper\compute_shader.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: hyperref package is loaded.
+Package caption Info: End \AtBeginDocument code.
+
+("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count102
+\scratchdimen=\dimen113
+\scratchbox=\box26
+\nofMPsegments=\count103
+\nofMParguments=\count104
+\everyMPshowfont=\toks17
+\MPscratchCnt=\count105
+\MPscratchDim=\dimen114
+\MPnumerator=\count106
+\makeMPintoPDFobject=\count107
+\everyMPtoPDFconversion=\toks18
+)
+\AtBeginShipoutBox=\box27
+
+
+Package hyperref Warning: Height of page (\paperheight) is invalid (0.0pt),
+(hyperref)                using 11in.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+)
+Package hyperref Info: Link coloring ON on input line 31.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
+Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count108
+)
+LaTeX Info: Redefining \ref on input line 31.
+LaTeX Info: Redefining \pageref on input line 31.
+LaTeX Info: Redefining \nameref on input line 31.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 56.
+LaTeX Font Info:    Try loading font information for OT1+ptmcm on input line 56.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1ptmcm.fd"
+File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ptmcm on input line 56.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omlptmcm.fd"
+File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+psycm on input line 56.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omxpsycm.fd"
+File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
+)
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 56.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+) <fibers_rc_spec.png, id=3, 481.8pt x 361.35pt>
+File: fibers_rc_spec.png Graphic file (type png)
+ <use fibers_rc_spec.png>
+Package pdftex.def Info: fibers_rc_spec.png used on input line 56.
+(pdftex.def)             Requested size: 112.40662pt x 84.30524pt.
+
+<vectubes_rc_spec.png, id=5, 481.8pt x 361.35pt>
+File: vectubes_rc_spec.png Graphic file (type png)
+ <use vectubes_rc_spec.png>
+Package pdftex.def Info: vectubes_rc_spec.png used on input line 56.
+(pdftex.def)             Requested size: 112.40662pt x 84.30524pt.
+ <fibers2_2.png, id=6, 642.4pt x 481.8pt>
+File: fibers2_2.png Graphic file (type png)
+
+<use fibers2_2.png>
+Package pdftex.def Info: fibers2_2.png used on input line 56.
+(pdftex.def)             Requested size: 112.40662pt x 84.30154pt.
+ <fibers_te_wf.png, id=7, 481.8pt x 361.35pt>
+File: fibers_te_wf.png Graphic file (type png)
+ <use fibers_te_wf.png>
+Package pdftex.def Info: fibers_te_wf.png used on input line 56.
+(pdftex.def)             Requested size: 112.40662pt x 84.30524pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 56.
+See the caption package documentation for explanation.
+
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 58.
+<cross_frames.pdf, id=13, 256.07669pt x 398.32814pt>
+File: cross_frames.pdf Graphic file (type pdf)
+ <use cross_frames.pdf>
+Package pdftex.def Info: cross_frames.pdf used on input line 79.
+(pdftex.def)             Requested size: 102.42885pt x 159.32843pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
+
+
+ <C:/Users/Hummel/Desktop/SplineTubesPaper/fibers_rc_spec.png> <C:/Users/Hummel/Desktop/SplineTubesPaper/vectubes_rc_spe
+c.png> <C:/Users/Hummel/Desktop/SplineTubesPaper/fibers2_2.png> <C:/Users/Hummel/Desktop/SplineTubesPaper/fibers_te_wf.p
+ng>]
+Underfull \hbox (badness 3396) in paragraph at lines 91--92
+\T1/ptm/m/n/9 ap-proach with cur-va-ture de-pen-dent adap-tive sam-pling
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [2 <C:/Users/Hummel/Desktop/SplineTubesPaper/cross_frames.pdf>] <tbuffer.pdf, id=65, 113.82526pt x 321.6015pt>
+File: tbuffer.pdf Graphic file (type pdf)
+ <use tbuffer.pdf>
+Package pdftex.def Info: tbuffer.pdf used on input line 109.
+(pdftex.def)             Requested size: 45.52928pt x 128.6383pt.
+
+<cyl.pdf, id=67, 469.51411pt x 455.30101pt>
+File: cyl.pdf Graphic file (type pdf)
+ <use cyl.pdf>
+Package pdftex.def Info: cyl.pdf used on input line 120.
+(pdftex.def)             Requested size: 216.0pt x 209.46184pt.
+ <vertex_pos.pdf, id=68, 497.94029pt x 284.62335pt>
+File: vertex_pos.pdf Graphic file (type pdf)
+
+<use vertex_pos.pdf>
+Package pdftex.def Info: vertex_pos.pdf used on input line 127.
+(pdftex.def)             Requested size: 199.17258pt x 113.84732pt.
+
+! Argument of \@caption has an extra }.
+<inserted text> 
+                \par 
+l.137 	}}
+         
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+\@captype {\def \@currenvir {itemize}\edef \@currenvline {\on@line }\csname \ETC.
+! Paragraph ended before \@caption was complete.
+<to be read again> 
+                   \par 
+l.137 	}}
+         
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 	}}
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[3 <C:/Users/Hummel/Desktop/SplineTubesPaper/tbuffer.pdf>] <disc_frames.png, id=98, 602.25pt x 451.6875pt>
+File: disc_frames.png Graphic file (type png)
+
+<use disc_frames.png>
+Package pdftex.def Info: disc_frames.png used on input line 148.
+(pdftex.def)             Requested size: 216.0pt x 162.00085pt.
+ <vertex_normal.pdf, id=105, 355.68884pt x 398.32814pt>
+File: vertex_normal.pdf Graphic file (type pdf)
+ <use vertex_normal.pdf>
+Package pdftex.def Info: vertex_normal.pdf used on input line 157.
+(pdftex.def)             Requested size: 142.27301pt x 159.32843pt.
+
+! Argument of \@caption has an extra }.
+<inserted text> 
+                \par 
+l.167 	\end{itemize}}}
+                      
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+\@captype {\def \@currenvir {itemize}\edef \@currenvline {\on@line }\csname \ETC.
+! Paragraph ended before \@caption was complete.
+<to be read again> 
+                   \par 
+l.167 	\end{itemize}}}
+                      
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[4 <C:/Users/Hummel/Desktop/SplineTubesPaper/cyl.pdf> <C:/Users/Hummel/Desktop/SplineTubesPaper/vertex_pos.pdf> <C:/User
+s/Hummel/Desktop/SplineTubesPaper/disc_frames.png>] <notchy_comp.png, id=140, 602.25pt x 225.84375pt>
+File: notchy_comp.png Graphic file (type png)
+
+<use notchy_comp.png>
+Package pdftex.def Info: notchy_comp.png used on input line 179.
+(pdftex.def)             Requested size: 216.0pt x 81.00043pt.
+ <bulbs.png, id=141, 602.25pt x 451.6875pt>
+File: bulbs.png Graphic file (type png)
+ <use bulbs.png>
+Package pdftex.def Info: bulbs.png used on input line 185.
+(pdftex.def)             Requested size: 216.0pt x 162.00085pt.
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[5 <C:/Users/Hummel/Desktop/SplineTubesPaper/vertex_normal.pdf> <C:/Users/Hummel/Desktop/SplineTubesPaper/notchy_comp.pn
+g>] <c1_disc3.png, id=165, 602.25pt x 451.6875pt>
+File: c1_disc3.png Graphic file (type png)
+ <use c1_disc3.png>
+Package pdftex.def Info: c1_disc3.png used on input line 200.
+(pdftex.def)             Requested size: 216.0pt x 162.00085pt.
+ <caps_comp4.png, id=168, 248.42813pt x 96.36pt>
+File: caps_comp4.png Graphic file (type png)
+
+<use caps_comp4.png>
+Package pdftex.def Info: caps_comp4.png used on input line 211.
+(pdftex.def)             Requested size: 216.0pt x 83.7825pt.
+ <bulbs_comp.png, id=170, 602.25pt x 451.6875pt>
+File: bulbs_comp.png Graphic file (type png)
+ <use bulbs_comp.png>
+Package pdftex.def Info: bulbs_comp.png used on input line 223.
+(pdftex.def)             Requested size: 216.0pt x 162.00085pt.
+ [6 <C:/Users/Hummel/Desktop/SplineTubesPaper/bulbs.png> <C:/Users/Hummel/Desktop/SplineTubesPaper/c1_disc3.png> <C:/Use
+rs/Hummel/Desktop/SplineTubesPaper/caps_comp4.png>] <isec.pdf, id=182, 611.76553pt x 341.47577pt>
+File: isec.pdf Graphic file (type pdf)
+ <use isec.pdf>
+Package pdftex.def Info: isec.pdf used on input line 236.
+(pdftex.def)             Requested size: 216.0pt x 120.56561pt.
+
+Underfull \hbox (badness 5036) in paragraph at lines 241--242
+ \T1/ptm/b/n/9 In-ter-sec-tion cal-cu-la-tion and shad-ing \T1/ptm/m/n/9 The deriva-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 241--242
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 244--246
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 248--250
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 252--254
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 256--258
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 263--265
+
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[7 <C:/Users/Hummel/Desktop/SplineTubesPaper/bulbs_comp.png> <C:/Users/Hummel/Desktop/SplineTubesPaper/isec.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 267--269
+
+ []
+
+<binary.pdf, id=207, 426.8748pt x 284.62335pt>
+File: binary.pdf Graphic file (type pdf)
+ <use binary.pdf>
+Package pdftex.def Info: binary.pdf used on input line 276.
+(pdftex.def)             Requested size: 216.0pt x 144.02246pt.
+ <f_1.pdf, id=213, 260.17201pt x 259.56071pt>
+File: f_1.pdf Graphic file (type pdf)
+
+<use f_1.pdf>
+Package pdftex.def Info: f_1.pdf used on input line 288.
+(pdftex.def)             Requested size: 216.0pt x 215.50266pt.
+ <f_12.pdf, id=214, 260.17201pt x 259.56071pt>
+File: f_12.pdf Graphic file (type pdf)
+ <use f_12.pdf>
+Package pdftex.def Info: f_12.pdf used on input line 289.
+(pdftex.def)             Requested size: 216.0pt x 215.50266pt.
+ <f_2.pdf, id=215, 260.17201pt x 259.56071pt>
+File: f_2.pdf Graphic file (type pdf)
+
+<use f_2.pdf>
+Package pdftex.def Info: f_2.pdf used on input line 295.
+(pdftex.def)             Requested size: 216.0pt x 215.50266pt.
+ <f_3.pdf, id=216, 260.17201pt x 259.56071pt>
+File: f_3.pdf Graphic file (type pdf)
+ <use f_3.pdf>
+Package pdftex.def Info: f_3.pdf used on input line 296.
+(pdftex.def)             Requested size: 216.0pt x 215.50266pt.
+ <bb_comp.png, id=219, 602.25pt x 451.6875pt>
+File: bb_comp.png Graphic file (type png)
+
+<use bb_comp.png>
+Package pdftex.def Info: bb_comp.png used on input line 305.
+(pdftex.def)             Requested size: 216.0pt x 162.00085pt.
+ [8 <C:/Users/Hummel/Desktop/SplineTubesPaper/binary.pdf>]
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[9 <C:/Users/Hummel/Desktop/SplineTubesPaper/f_1.pdf> <C:/Users/Hummel/Desktop/SplineTubesPaper/f_12.pdf> <C:/Users/Humm
+el/Desktop/SplineTubesPaper/f_2.pdf> <C:/Users/Hummel/Desktop/SplineTubesPaper/f_3.pdf>]
+<scenes.png, id=310, 1284.8pt x 1445.4pt>
+File: scenes.png Graphic file (type png)
+ <use scenes.png>
+Package pdftex.def Info: scenes.png used on input line 317.
+(pdftex.def)             Requested size: 216.0pt x 242.97993pt.
+ <stats3.pdf, id=311, 722.7pt x 451.6875pt>
+File: stats3.pdf Graphic file (type pdf)
+ <use stats3.pdf>
+Package pdftex.def Info: stats3.pdf used on input line 324.
+(pdftex.def)             Requested size: 216.0pt x 134.99727pt.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 332.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 332.
+ [10 <C:/Users/Hummel/Desktop/SplineTubesPaper/bb_comp.png> <C:/Users/Hummel/Desktop/SplineTubesPaper/scenes.png> <C:/Us
+ers/Hummel/Desktop/SplineTubesPaper/stats3.pdf>]
+<perf1.pdf, id=327, 722.7pt x 542.025pt>
+File: perf1.pdf Graphic file (type pdf)
+ <use perf1.pdf>
+Package pdftex.def Info: perf1.pdf used on input line 338.
+(pdftex.def)             Requested size: 216.0pt x 161.99672pt.
+ <perf2.pdf, id=328, 722.7pt x 542.025pt>
+File: perf2.pdf Graphic file (type pdf)
+ <use perf2.pdf>
+Package pdftex.def Info: perf2.pdf used on input line 339.
+(pdftex.def)             Requested size: 216.0pt x 161.99672pt.
+
+<perf3.pdf, id=329, 722.7pt x 542.025pt>
+File: perf3.pdf Graphic file (type pdf)
+ <use perf3.pdf>
+Package pdftex.def Info: perf3.pdf used on input line 340.
+(pdftex.def)             Requested size: 216.0pt x 161.99672pt.
+
+! Argument of \@caption has an extra }.
+<inserted text> 
+                \par 
+l.345 	\end{itemize}}}
+                      
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+\@captype {\def \@currenvir {itemize}\edef \@currenvline {\on@line }\csname \ETC.
+! Paragraph ended before \@caption was complete.
+<to be read again> 
+                   \par 
+l.345 	\end{itemize}}}
+                      
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.345 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.345 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.345 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.345 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.345 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.345 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.345 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.345 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.345 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+<perf4.pdf, id=331, 722.7pt x 542.025pt>
+File: perf4.pdf Graphic file (type pdf)
+ <use perf4.pdf>
+Package pdftex.def Info: perf4.pdf used on input line 359.
+(pdftex.def)             Requested size: 216.0pt x 161.99672pt.
+
+! Argument of \@caption has an extra }.
+<inserted text> 
+                \par 
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+\@captype {\def \@currenvir {itemize}\edef \@currenvline {\on@line }\csname \ETC.
+! Paragraph ended before \@caption was complete.
+<to be read again> 
+                   \par 
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 ...ion evaluation shader or vertex shader.}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+<perf5.pdf, id=332, 722.7pt x 542.025pt>
+File: perf5.pdf Graphic file (type pdf)
+ <use perf5.pdf>
+Package pdftex.def Info: perf5.pdf used on input line 373.
+(pdftex.def)             Requested size: 216.0pt x 161.99672pt.
+
+! Argument of \@caption has an extra }.
+<inserted text> 
+                \par 
+l.379 	\end{itemize}}}
+                      
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+\@captype {\def \@currenvir {itemize}\edef \@currenvline {\on@line }\csname \ETC.
+! Paragraph ended before \@caption was complete.
+<to be read again> 
+                   \par 
+l.379 	\end{itemize}}}
+                      
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+<perf6.pdf, id=335, 722.7pt x 542.025pt>
+File: perf6.pdf Graphic file (type pdf)
+ <use perf6.pdf>
+Package pdftex.def Info: perf6.pdf used on input line 394.
+(pdftex.def)             Requested size: 216.0pt x 161.99672pt.
+
+! Argument of \@caption has an extra }.
+<inserted text> 
+                \par 
+l.398 	\end{itemize}}}
+                      
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+\@captype {\def \@currenvir {itemize}\edef \@currenvline {\on@line }\csname \ETC.
+! Paragraph ended before \@caption was complete.
+<to be read again> 
+                   \par 
+l.398 	\end{itemize}}}
+                      
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 	\end{itemize}}}
+                      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+<fibers_aa_comp.png, id=336, 642.4pt x 240.9pt>
+File: fibers_aa_comp.png Graphic file (type png)
+ <use fibers_aa_comp.png>
+Package pdftex.def Info: fibers_aa_comp.png used on input line 404.
+(pdftex.def)             Requested size: 216.0pt x 81.00066pt.
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[11 <C:/Users/Hummel/Desktop/SplineTubesPaper/perf1.pdf> <C:/Users/Hummel/Desktop/SplineTubesPaper/perf2.pdf> <C:/Users/
+Hummel/Desktop/SplineTubesPaper/perf3.pdf>] [12 <C:/Users/Hummel/Desktop/SplineTubesPaper/perf4.pdf> <C:/Users/Hummel/De
+sktop/SplineTubesPaper/perf5.pdf> <C:/Users/Hummel/Desktop/SplineTubesPaper/perf6.pdf>]
+Underfull \hbox (badness 4713) in paragraph at lines 418--424
+\T1/ptm/m/n/9 As in-di-cated by the pro-fil-ing re-sults, ex-tend-ing the
+ []
+
+(C:\Users\Hummel\Desktop\SplineTubesPaper\compute_shader.bbl
+(C:\Users\Hummel\Desktop\SplineTubesPaper\compute_shader.brf)
+\tf@brf=\write3
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--17
+[][]$\T1/pcr/m/n/8 http : / / webhome . cs . uvic . ca / ~blob / courses /
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[13 <C:/Users/Hummel/Desktop/SplineTubesPaper/fibers_aa_comp.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 44--44
+[][]$\T1/pcr/m/n/8 http : / / sydney . edu . au / engineering / it /
+ []
+
+
+Underfull \hbox (badness 1838) in paragraph at lines 61--61
+[]\T1/ptm/m/sc/8 Merhof D., Son-ntag M., En-ders F., Nim-
+ []
+
+
+Underfull \hbox (badness 1137) in paragraph at lines 61--61
+\T1/ptm/m/n/8 tion for white mat-ter tracts us-ing tri-an-gle strips and point
+ []
+
+
+Underfull \hbox (badness 1789) in paragraph at lines 61--61
+\T1/ptm/m/n/8 sprites.  1181--1188.  [][]$\T1/pcr/m/n/8 doi : http : / / dx . doi . org / 10 .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--73
+[]\T1/ptm/m/sc/8 Nunes G. N., Valde-taro A., Ra-poso
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--73
+\T1/ptm/m/sc/8 A., Feijó B., de Toledo R.\T1/ptm/m/n/8 :  Ren-der-ing tubes
+ []
+
+
+Underfull \hbox (badness 7944) in paragraph at lines 73--73
+\T1/ptm/m/n/8 from dis-crete curves us-ing hard-ware tes-sel-la-tion.  \T1/ptm/m/it/8 J.
+ []
+
+
+Underfull \hbox (badness 3354) in paragraph at lines 73--73
+\T1/ptm/m/it/8 Graph-ics Tools 16\T1/ptm/m/n/8 , 3 (2012), 123--143.  URL: [][]$\T1/pcr/m/n/8 http :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--73
+\T1/pcr/m/n/8 / / dx . doi . org / 10 . 1080 / 2165347X . 2012 . 659610$[][]\T1/ptm/m/n/8 ,
+ []
+
+
+Underfull \hbox (badness 1077) in paragraph at lines 82--82
+\T1/ptm/m/n/8 The Eu-ro-graph-ics As-so-ci-a-tion.  [][]$\T1/pcr/m/n/8 doi : 10 . 2312 / VisSym /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
+[][]$\T1/pcr/m/n/8 http : / / lolengine . net / blog / 2013 / 09 / 21 /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
+\T1/pcr/m/n/8 picking-[]orthogonal-[]vector-[]combing-[]coconuts$[][]\T1/ptm/m/n/8 .
+ []
+
+
+Underfull \hbox (badness 2707) in paragraph at lines 94--94
+[]\T1/ptm/m/sc/8 Stoll C., Gumhold S., pe-ter Sei-del H.,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 100--100
+[][]$\T1/pcr/m/n/8 http : / / stackoverflow . com / questions /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--110
+[][]$\T1/pcr/m/n/8 https : / / en . wikipedia . org / wiki / Bisection _
+ []
+
+! Illegal parameter number in definition of \Hy@tempa.
+<to be read again> 
+                   K
+l.116 
+      
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@tempa.
+<to be read again> 
+                   K
+l.116 
+      
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--116
+[][]$\T1/pcr/m/n/8 https : / / en . wikipedia . org / wiki /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--116
+\T1/pcr/m/n/8 Frenet-[]Serret _ formulas # Kinematics _ of _ the _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 121--121
+[][]$\T1/pcr/m/n/8 https : / / en . wikipedia . org / wiki / Halley '[] s _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 126--126
+[][]$\T1/pcr/m/n/8 https : / / en . wikipedia . org / wiki / Newton '[] s _
+ []
+
+)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 440.
+ [14]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 440.
+ (C:\Users\Hummel\Desktop\SplineTubesPaper\compute_shader.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 440.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 440.
+Package rerunfilecheck Info: File `compute_shader.brf' has not changed.
+(rerunfilecheck)             Checksum: D0628C8C86C2A880E8162982C6F972B4;1222.
+ ) ) 
+Here is how much of TeX's memory you used:
+ 6803 strings out of 494045
+ 104172 string characters out of 3148383
+ 200971 words of memory out of 3000000
+ 9905 multiletter control sequences out of 15000+200000
+ 49456 words of font info for 74 fonts, out of 3000000 for 9000
+ 715 hyphenation exceptions out of 8191
+ 42i,9n,40p,1626b,404s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program F
+iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cms
+y9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/time
+s/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/
+times/utmri8a.pfb>
+Output written on compute_shader.pdf (14 pages, 6836967 bytes).
+PDF statistics:
+ 507 PDF objects out of 1000 (max. 8388607)
+ 75 named destinations out of 1000 (max. 500000)
+ 156 words of extra memory for PDF output out of 10000 (max. 10000000)
+

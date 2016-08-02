@@ -1,0 +1,135 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{\uppercase{SGpSP05}}
+
+\bibitem[AB76]{GenCyl}
+\textsc{Agin G.~J., Binford T.~O.}:
+\newblock Computer description of curved objects.
+\newblock \emph{IEEE Trans. Comput. 25}, 4 (Apr. 1976), 439--449.
+\newblock URL: \url{http://dx.doi.org/10.1109/TC.1976.1674626}, \href
+  {http://dx.doi.org/10.1109/TC.1976.1674626}
+  {\path{doi:10.1109/TC.1976.1674626}}.
+
+\bibitem[Blo]{Frames}
+\textsc{Bloomenthal}:
+\newblock Calculation of reference frames along a space curve.
+\newblock
+  \\\url{http://webhome.cs.uvic.ca/~blob/courses/305/notes/pdf/ref-frames.pdf}.
+
+\bibitem[Car84]{Carpenter:1984:BAH:800031.808585}
+\textsc{Carpenter L.}:
+\newblock The a -buffer, an antialiased hidden surface method.
+\newblock In \emph{Proceedings of the 11th Annual Conference on Computer
+  Graphics and Interactive Techniques} (New York, NY, USA, 1984), SIGGRAPH '84,
+  ACM, pp.~103--108.
+\newblock URL: \url{http://doi.acm.org/10.1145/800031.808585}, \href
+  {http://dx.doi.org/10.1145/800031.808585} {\path{doi:10.1145/800031.808585}}.
+
+\bibitem[GM03]{GM03}
+\textsc{Grisoni L., Marchal D.}:
+\newblock High performance generalized cylinders visualization.
+\newblock In \emph{Shape Modelling International} (2003), pp.~257--263.
+\newblock (ACM Siggraph, Eurographics, and IEEE sponsored).
+
+\bibitem[Har94]{Hart94spheretracing:}
+\textsc{Hart J.~C.}:
+\newblock Sphere tracing: A geometric method for the antialiased ray tracing of
+  implicit surfaces.
+\newblock \emph{The Visual Computer 12} (1994), 527--545.
+
+\bibitem[HE95]{quartics}
+\textsc{Herbison-Evans D.}:
+\newblock Solving quartics and cubics for graphics.
+\newblock \\\url{http://sydney.edu.au/engineering/it/research/tr/tr487.pdf},
+  1995.
+
+\bibitem[KHK{\etalchar{*}}09]{ImplicitsWithIAandAA}
+\textsc{Knoll A., Hijazi Y., Kensler A., Schott M., Hansen C., Hagen H.}:
+\newblock {Fast Ray Tracing of Arbitrary Implicit Surfaces with Interval and
+  Affine Arithmetic}.
+\newblock \emph{Computer Graphics Forum} (2009).
+\newblock \href {http://dx.doi.org/10.1111/j.1467-8659.2008.01189.x}
+  {\path{doi:10.1111/j.1467-8659.2008.01189.x}}.
+
+\bibitem[MSE{\etalchar{*}}06]{Merhof:2006:HVW}
+\textsc{Merhof D., Sonntag M., Enders F., Nimsky C., Hastreiter P., Greiner
+  G.}:
+\newblock Hybrid visualization for white matter tracts using triangle strips
+  and point sprites.
+\newblock 1181--1188.
+\newblock \href {http://dx.doi.org/http://dx.doi.org/10.1109/TVCG.2006.151}
+  {\path{doi:http://dx.doi.org/10.1109/TVCG.2006.151}}.
+
+\bibitem[NvdP98]{Neulander98renderinggeneralized}
+\textsc{Neulander I., van~de Panne M.}:
+\newblock Rendering generalized cylinders with paintstrokes, 1998.
+
+\bibitem[NVR{\etalchar{*}}12]{DBLP:journals/jgtools/NunesVRFT12}
+\textsc{Nunes G.~N., Valdetaro A., Raposo A., Feij{\'{o}} B., de~Toledo R.}:
+\newblock Rendering tubes from discrete curves using hardware tessellation.
+\newblock \emph{J. Graphics Tools 16}, 3 (2012), 123--143.
+\newblock URL: \url{http://dx.doi.org/10.1080/2165347X.2012.659610}, \href
+  {http://dx.doi.org/10.1080/2165347X.2012.659610}
+  {\path{doi:10.1080/2165347X.2012.659610}}.
+
+\bibitem[RBE{\etalchar{*}}06]{VisSym:EuroVis06:035-042}
+\textsc{Reina G., Bidmon K., Enders F., Hastreiter P., Ertl T.}:
+\newblock {GPU-Based Hyperstreamlines for Diffusion Tensor Imaging}.
+\newblock In \emph{EUROVIS - Eurographics /IEEE VGTC Symposium on
+  Visualization} (2006), Santos B.~S., Ertl T., Joy K., (Eds.), The
+  Eurographics Association.
+\newblock \href {http://dx.doi.org/10.2312/VisSym/EuroVis06/035-042}
+  {\path{doi:10.2312/VisSym/EuroVis06/035-042}}.
+
+\bibitem[Sam]{OVec}
+\textsc{Sam}:
+\newblock On picking an orthogonal vector (and combing coconuts).
+\newblock
+  \\\url{http://lolengine.net/blog/2013/09/21/picking-orthogonal-vector-combing-coconuts}.
+
+\bibitem[SGpSP05]{Stoll05visualizationwith}
+\textsc{Stoll C., Gumhold S., peter Seidel H., Planck M.}:
+\newblock Visualization with stylized line primitives.
+\newblock In \emph{In: Proceedings of IEEE visualization 2005} (2005),
+  pp.~695--702.
+
+\bibitem[Sta]{OVecs}
+\textsc{Stackoverflow}:
+\newblock Given a single arbitrary unit vector, what is the best method to
+  compute an arbitrary orthogonal unit vector?
+\newblock \\\url{http://stackoverflow.com/questions/19649452}.
+
+\bibitem[Web00]{LBS}
+\textsc{Weber J.}:
+\newblock Run-time skin deformation.
+\newblock In \emph{Proceedings of the Game Developers Conference} (2000).
+
+\bibitem[Wika]{Bisection}
+\textsc{Wiki}:
+\newblock Bisection method.
+\newblock \\\url{https://en.wikipedia.org/wiki/Bisection_method}.
+
+\bibitem[Wikb]{Frenet}
+\textsc{Wiki}:
+\newblock Frenet {S}erret formulas, {K}inematics of the frame.
+\newblock
+  \\\url{https://en.wikipedia.org/wiki/Frenet-Serret_formulas#Kinematics_of_the_frame}.
+
+\bibitem[Wikc]{Halley}
+\textsc{Wiki}:
+\newblock Halley's method.
+\newblock \\\url{https://en.wikipedia.org/wiki/Halley's_method}.
+
+\bibitem[Wikd]{Newton}
+\textsc{Wiki}:
+\newblock Newton's method.
+\newblock \\\url{https://en.wikipedia.org/wiki/Newton's_method}.
+
+\bibitem[ZSH96]{Zockler:1996:IVF:244979.245023}
+\textsc{Z\"{o}ckler M., Stalling D., Hege H.-C.}:
+\newblock Interactive visualization of 3d-vector fields using illuminated
+  stream lines.
+\newblock In \emph{Proceedings of the 7th Conference on Visualization '96} (Los
+  Alamitos, CA, USA, 1996), VIS '96, IEEE Computer Society Press, pp.~107--ff.
+\newblock URL: \url{http://dl.acm.org/citation.cfm?id=244979.245023}.
+
+\end{thebibliography}

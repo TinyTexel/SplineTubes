@@ -1,0 +1,10 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: compute_shader.aux
+The style file: eg-alpha-doi.bst
+Database file #1: compute_shader_bib.bib
+Warning--string name "j-ieee-trans-vis-comput-graph" is undefined
+--line 119 of file compute_shader_bib.bib
+A bad cross reference---entry "DBLP:journals/jgtools/NunesVRFT12"
+refers to entry "DBLP:conf/icalt/2012", which doesn't exist
+Warning--I didn't find a database entry for "DBLP:conf/icalt/2012"
+Warning--empty journal in Merhof:2006:HVW
+(There was 1 error message)
