@@ -1,0 +1,36 @@
+Version: 1
+Tube Count: 2
+Node Counts per Tube: 2 2 
+Total Node Count: 4
+
+Node 0:
+1 0 0
+0.1
+1 0 0
+0 3 0
+0
+0 3 0
+
+Node 1:
+0 0 1
+0.1
+0 0 1
+0 -3 0
+0
+0 -3 3
+
+Node 2:
+0 0 1
+0.1
+1 0 0
+0 -3 0
+0
+0 3 0
+
+Node 3:
+-1 0 0
+0.1
+0 0 1
+0 3 0
+0
+0 -3 3

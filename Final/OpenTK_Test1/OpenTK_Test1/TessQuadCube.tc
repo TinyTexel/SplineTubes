@@ -1,0 +1,54 @@
+#version 400
+
+layout(vertices = 4) out;
+//in vec3 vPos[];
+//out vec3 tcPos[];
+in VS_OUT
+{
+	vec3 Pos;
+} In[];
+
+out TC_OUT
+{
+	vec3 Pos;
+} Out[];
+
+// uniform float TessLevelInner;
+// uniform float TessLevelOuter;
+
+// struct Foo
+// {
+	// float value;
+// };
+
+// Foo Foo_New(float v)
+// {
+	// Foo foo;
+	// foo.value = v;
+	// return foo;
+// }
+
+#define ID gl_InvocationID
+
+void main()
+{
+    Out[ID].Pos = In[ID].Pos;
+
+	// Foo foo = Foo_New(0.0);
+	
+    if (ID == 0) 
+    {
+      //  gl_TessLevelInner[0] = TessLevelInner;
+      //  gl_TessLevelOuter[0] = TessLevelOuter;
+      //  gl_TessLevelOuter[1] = TessLevelOuter;
+      //  gl_TessLevelOuter[2] = TessLevelOuter;
+	  float s = 3.0;
+        gl_TessLevelInner[0] = s;
+		gl_TessLevelInner[1] = s;
+
+        gl_TessLevelOuter[0] = s;
+        gl_TessLevelOuter[1] = s;
+        gl_TessLevelOuter[2] = s;
+		gl_TessLevelOuter[3] = s;
+    }
+}

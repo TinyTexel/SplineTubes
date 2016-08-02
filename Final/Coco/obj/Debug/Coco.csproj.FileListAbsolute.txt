@@ -1,0 +1,16 @@
+c:\users\hummel\documents\visual studio 2013\Projects\Coco\bin\Debug\Coco.dll
+c:\users\hummel\documents\visual studio 2013\Projects\Coco\bin\Debug\Coco.pdb
+c:\users\hummel\documents\visual studio 2013\Projects\Coco\obj\Debug\Coco.csprojResolveAssemblyReference.cache
+c:\users\hummel\documents\visual studio 2013\Projects\Coco\obj\Debug\Coco.dll
+c:\users\hummel\documents\visual studio 2013\Projects\Coco\obj\Debug\Coco.pdb
+c:\users\hummel\documents\visual studio 2013\Projects\Coco\bin\Debug\OpenTK.dll
+c:\users\hummel\documents\visual studio 2013\Projects\Coco\bin\Debug\OpenTK.pdb
+c:\users\hummel\documents\visual studio 2013\Projects\Coco\bin\Debug\OpenTK.xml
+C:\Git\SplineTubes\Final\Coco\bin\Debug\Coco.dll
+C:\Git\SplineTubes\Final\Coco\bin\Debug\Coco.pdb
+C:\Git\SplineTubes\Final\Coco\bin\Debug\OpenTK.dll
+C:\Git\SplineTubes\Final\Coco\bin\Debug\OpenTK.pdb
+C:\Git\SplineTubes\Final\Coco\bin\Debug\OpenTK.xml
+C:\Git\SplineTubes\Final\Coco\obj\Debug\Coco.csprojResolveAssemblyReference.cache
+C:\Git\SplineTubes\Final\Coco\obj\Debug\Coco.dll
+C:\Git\SplineTubes\Final\Coco\obj\Debug\Coco.pdb

@@ -1,0 +1,38 @@
+#version 400
+
+layout(quads, fractional_odd_spacing, ccw) in;
+// in vec3 tcPos[];
+// out vec3 tePos;
+
+in TC_OUT
+{
+	vec3 Pos;
+} In[];
+
+out TE_OUT
+{
+	vec3 Pos;
+} Out;
+
+// out vec4 tePatchDistance;
+
+layout (std140) uniform shader_data
+{ 
+    mat4 viewProjMat;
+};
+
+
+void main()
+{	
+    float u = gl_TessCoord.x, v = gl_TessCoord.y;
+	
+    vec3 a = mix(In[0].Pos, In[1].Pos, u);
+    vec3 b = mix(In[3].Pos, In[2].Pos, u);
+    Out.Pos = mix(a, b, v);
+	
+	Out.Pos.xz = normalize(Out.Pos.xz);
+	
+    // tePatchDistance = vec4(u, v, 1.0 - u, 1.0 - v);
+	
+    gl_Position = vec4(Out.Pos, 1.0) * viewProjMat;
+}

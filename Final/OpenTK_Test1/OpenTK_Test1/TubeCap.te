@@ -1,0 +1,107 @@
+#version 430
+
+#define float2 vec2
+#define float3 vec3
+#define float4 vec4
+
+#define saturate(x) clamp(x, 0.0, 1.0)
+#define lerp(a, b, l) mix(a, b, l)
+#define mul(a, b) (a * b)
+// #define Pos gl_Position
+
+const float Pi = 3.141592653589793238462643383279502884197169399375105820974944592;
+const float Rcp3 = 1.0 / 3.0;
+
+const float RcpMaxLId = 1.0 / 31.0;
+
+const uint SegmentSize = 1 + 16;
+const uint NodeSize = 4;
+
+// #define TUBES_DATA_TYPE_IS_SSBO
+
+// #ifdef TUBES_DATA_TYPE_IS_SSBO
+	// layout (std430) buffer TubesData
+	// {
+		// float4 TubesBuffer[];
+	// };
+// #else
+	// layout (std140) uniform TubesData
+	// {
+		// float4 TubesBuffer[8];
+	// };
+// #endif
+
+
+
+layout(triangles, fractional_odd_spacing, ccw) in;
+// in vec3 tcPos[];
+// out vec3 tePos;
+
+in TC_OUT
+{
+	float3 Pos; 		
+	float3 LPos; 		
+	float3 Normal;		
+	float3 OVec1;		
+	float3 UVW0;
+} In[];
+
+out TE_OUT
+{
+	float3 WPos; 		
+	float3 Normal;			
+	float3 UVW0;
+} Out;
+
+
+layout (std140) uniform PerFrameBuffer
+{ 
+    mat4 ViewProjMat;
+	vec3 CamPos;
+};
+
+// #define BILERP(IN, MEM, UV) lerp(lerp(IN[0].MEM, IN[1].MEM, UV.x), lerp(IN[3].MEM, IN[2].MEM, UV.x), UV.y)
+#define FOO(IN, MEM, UVW) (IN[0].MEM * UVW.x + IN[1].MEM * UVW.y + IN[2].MEM * UVW.z)
+
+void main()
+{	
+	float3 uvw = gl_TessCoord.xyz;
+
+	
+	Out.UVW0 = FOO(In, UVW0, uvw);
+	
+	float3 wPos = FOO(In, Pos, uvw);
+
+	// float  r = 1.0; 
+	if(uvw.x == 0.0)
+	wPos.xz = normalize(wPos.xz);
+	// wPos.y = 0.1;
+	// wPos.xz = lerp(normalize(wPos.xz), wPos.xz, uvw.x);
+	// if(uvw.x == 1.0) wPos.xz = float2(0.0);
+	// wPos.xz = normalize(wPos.xz) * (1.0 - uvw.x) + wPos.xz * uvw.x;
+	
+	// wPos = p + r * normalize(wPos - p);
+	
+	// {
+		// lPos.xz = normalize(lPos.xz);
+
+		// float3 tangent = normalize(EvalPTanCurve(tube, l));
+		// float3 ovec1 = normalize(lerp(
+		// normalize(ProjToPlane(In[0].OVec1, tangent)), 
+		// normalize(ProjToPlane(In[2].OVec1, tangent)), uv.x));
+		
+		// float3 ovec2 = cross(tangent, ovec1);
+			// // ovec2 = normalize(ovec2);
+			
+		// float3 ovec = ovec2 * lPos.z - ovec1 * lPos.x;
+		
+		// wPos = p + ovec * r;
+		// Out.Normal = CalcSurfaceNormal(tube, ovec, l);
+	// }
+	
+	Out.Normal = float3(0.0, 1.0, 0.0);
+	Out.WPos = wPos;
+	
+	// gl_Position = float4(In[0].Pos.xz, 0.0, 1.0);
+	gl_Position = mul(float4(wPos, 1.0), ViewProjMat);
+}

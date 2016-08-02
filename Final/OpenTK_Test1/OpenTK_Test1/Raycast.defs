@@ -1,0 +1,308 @@
+#ifndef RAYCAST_DEFS
+#define RAYCAST_DEFS
+
+// #define TUBES_DATA_TYPE_IS_SSBO
+// #define SPLIT_IN_4_SEGMENTS
+// #define USE_EARLYZ
+
+#define WIP 0
+#define COLOR 1
+#define COLOR_HQ 2
+#define SMOOTH_NORMAL 3
+#define BBOX 4
+#define LIT_COLOR_HQ 5
+
+// #define SHADING_STYLE 4
+
+
+
+#define float2 vec2
+#define float3 vec3
+#define float4 vec4
+
+#define float3x3 mat3x3
+
+float saturate(float x) { return clamp(x, 0.0, 1.0); }
+vec2 saturate(vec2 x) { return clamp(x, vec2(0.0), vec2(1.0)); }
+vec3 saturate(vec3 x) { return clamp(x, vec3(0.0), vec3(1.0)); }
+vec4 saturate(vec4 x) { return clamp(x, vec4(0.0), vec4(1.0)); }
+
+#define rsqrt(x) inversesqrt(x)
+
+#define lerp(a, b, l) mix(a, b, l)
+#define mul(a, b) (a * b)
+
+#define rcp(x) (1.0 / x)
+
+
+float  Pow2(float  x) { return x * x; }
+float2 Pow2(float2 x) { return x * x; }
+float3 Pow2(float3 x) { return x * x; }
+float4 Pow2(float4 x) { return x * x; }
+
+float  Pow3(float  x) { return x * x * x; }
+float2 Pow3(float2 x) { return x * x * x; }
+float3 Pow3(float3 x) { return x * x * x; }
+float4 Pow3(float4 x) { return x * x * x; }
+
+
+
+const float Pi = 3.141592653589793238462643383279502884197169399375105820974944592;
+const float Rcp3 = 1.0 / 3.0;
+
+const float RcpMaxLId = 1.0 / 31.0;
+
+const uint SegmentSize = 1;// + 16;
+const uint NodeSize = 4;
+
+
+layout (std140) uniform PerFrameBuffer
+{ 
+    mat4 ViewProjMat;
+	vec3 CamPos;
+};
+
+layout (std140) uniform StaticBuffer
+{ 
+	vec2 PixelCount;
+};
+
+#ifdef TUBES_DATA_TYPE_IS_SSBO
+	layout (std430) buffer TubesData
+	{
+		float4 TubesBuffer[];
+	};
+#else
+	layout (std140) uniform TubesData
+	{
+		float4 TubesBuffer[TUBES_BUFFER_SIZE];
+	};
+#endif
+
+struct TubeNode
+{
+	float3 Pos;
+	float  Rad;
+
+	float3 PTan;
+	float  RTan;
+	
+	float3 Col;
+	uint   BaseLayerId;
+	
+	float3 CTan;
+	float  EndNodeFlag;
+};
+
+TubeNode TubeNode_Load(uint off)
+{
+	float4 v0 = TubesBuffer[off];
+	float4 v1 = TubesBuffer[off + 1];
+	float4 v2 = TubesBuffer[off + 2];
+	float4 v3 = TubesBuffer[off + 3];
+
+	TubeNode node;
+	
+	node.Pos 			= v0.xyz;
+	node.Rad 			= v0.w;
+	
+	node.PTan 			= v1.xyz;
+	node.RTan 			= v1.w;
+	
+	node.Col 			= v2.xyz;
+	// node.BaseLayerId 	= asuint(v2.w);
+	node.BaseLayerId 	= 0;
+	
+	node.CTan 			= v3.xyz;
+	node.EndNodeFlag 	= v3.w;
+	
+	return node;
+}
+
+struct Tube
+{
+	TubeNode Start;
+	TubeNode End;
+	
+	uint BaseLayerId;
+	float EndNodeFlag;
+};
+
+Tube Tube_Load(uint off)
+{
+	Tube tube;
+	
+	tube.Start = TubeNode_Load(off);
+	tube.End   = TubeNode_Load(off + NodeSize);
+	
+	tube.BaseLayerId = tube.Start.BaseLayerId;
+	tube.EndNodeFlag = tube.Start.EndNodeFlag;
+	
+	return tube;
+}
+
+struct QTubeNode
+{
+	float3 Pos;
+	float  Rad;
+	float3 Col;
+};
+
+struct QTube
+{
+	QTubeNode Start;
+	QTubeNode H;
+	QTubeNode End;
+};
+
+
+Tube CreateTestTube()
+{
+	Tube tube;
+
+	{
+		tube.Start.Pos = float3(0.0);
+		tube.Start.Rad = 0.3;
+		
+		tube.Start.PTan = float3(1.0, 1.0, 1.0)*10.0;
+		tube.Start.RTan = 0.0;
+		
+		tube.Start.Col = float3(0.5);
+		tube.Start.BaseLayerId = 0;
+		
+		tube.Start.CTan = float3(6.0, 4.0, 3.0);
+		tube.Start.EndNodeFlag = 0.0;
+	}
+	
+	{
+		tube.End.Pos = float3(4.0, 0.0, 2.0);
+		tube.End.Rad = 0.3;
+		
+		tube.End.PTan = float3(1.0, -1.0, 4.0)*1;
+		tube.End.RTan = -0.0;
+		
+		tube.End.Col = float3(0.5);
+		tube.End.BaseLayerId = 0;
+		
+		tube.End.CTan = float3(6.0, 4.0, 3.0);
+		tube.End.EndNodeFlag = 0.0;
+	}
+	
+	tube.BaseLayerId = 0;
+	tube.EndNodeFlag = 0.0;
+	
+	return tube;
+}
+
+const float Gamma = 2.2;
+const float RcpGamma = 1.0 / Gamma;
+
+float3 GammaDecode(float3 col) { return pow(col, float3(Gamma)); }
+float3 GammaEncode(float3 col) { return pow(saturate(col), float3(RcpGamma)); }
+
+float EvalCSpline(float p1, float t1, float p2, float t2, float l)
+{
+	float h1 = p1 + t1 * Rcp3;
+	float h2 = p2 - t2 * Rcp3;
+	
+	float a1 = lerp(p1, h1, l);
+	float a2 = lerp(h1, h2, l);
+	float a3 = lerp(h2, p2, l);
+	
+	float b1 = lerp(a1, a2, l);
+	float b2 = lerp(a2, a3, l);
+	
+	// return lerp(p1, p2, l);
+	return lerp(b1, b2, l);
+}
+
+float3 EvalCSpline(float3 p1, float3 t1, float3 p2, float3 t2, float l)
+{
+	float3 h1 = p1 + t1 * Rcp3;
+	float3 h2 = p2 - t2 * Rcp3;
+	
+	float3 a1 = lerp(p1, h1, l);
+	float3 a2 = lerp(h1, h2, l);
+	float3 a3 = lerp(h2, p2, l);
+	
+	float3 b1 = lerp(a1, a2, l);
+	float3 b2 = lerp(a2, a3, l);
+	
+	// return lerp(p1, p2, l);
+	return lerp(b1, b2, l);
+}
+
+void EvalCSplineMidPoint(float p1, float t1, float p2, float t2, 
+out float out_p, out float out_t)
+{
+	float h1 = p1 + t1 * Rcp3;
+	float h2 = p2 - t2 * Rcp3;
+	
+	float a1 = (p1 + h1) * 0.5;
+	float a2 = (h1 + h2) * 0.5;
+	float a3 = (h2 + p2) * 0.5;
+
+	float b1 = (a1 + a2) * 0.5;
+	float b2 = (a2 + a3) * 0.5;
+	
+	out_t = (b2 - b1) * 3.0;
+	out_p = (b1 + b2) * 0.5;
+}
+
+void EvalCSplineMidPoint(float3 p1, float3 t1, float3 p2, float3 t2, 
+out float3 out_p, out float3 out_t)
+{
+	float3 h1 = p1 + t1 * Rcp3;
+	float3 h2 = p2 - t2 * Rcp3;
+	
+	float3 a1 = (p1 + h1) * 0.5;
+	float3 a2 = (h1 + h2) * 0.5;
+	float3 a3 = (h2 + p2) * 0.5;
+
+	float3 b1 = (a1 + a2) * 0.5;
+	float3 b2 = (a2 + a3) * 0.5;
+	
+	out_t = (b2 - b1) * 3.0;
+	out_p = (b1 + b2) * 0.5;
+}
+
+
+float EvalQCurve(float v0, float h, float v1, float l)
+{
+	return lerp(lerp(v0, h, l), lerp(h, v1, l), l);
+}
+
+float3 EvalQCurve(float3 v0, float3 h, float3 v1, float l)
+{
+	return lerp(lerp(v0, h, l), lerp(h, v1, l), l);
+}
+
+float3 EvalPosCurve(QTube tube, float l)
+{
+	return EvalQCurve(tube.Start.Pos, tube.H.Pos, tube.End.Pos, l);
+}
+
+float EvalRadCurve(QTube tube, float l)
+{
+	return EvalQCurve(tube.Start.Rad, tube.H.Rad, tube.End.Rad, l);
+}
+
+float3 EvalColCurve(QTube tube, float l)
+{
+	return EvalQCurve(tube.Start.Col, tube.H.Col, tube.End.Col, l);
+}
+
+
+float3 ProjToPlane(float3 vec, float3 n)
+{
+	return vec - n * dot(vec, n) / dot(n, n);
+}
+
+
+
+float3 CompleteVec(float2 xy)
+{
+	return float3(xy, sqrt(1.0 - saturate(dot(xy, xy))));
+}
+
+#endif

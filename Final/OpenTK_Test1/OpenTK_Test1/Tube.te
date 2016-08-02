@@ -1,0 +1,121 @@
+#ifndef TUBE_DEFS
+	#error [Tube.te depends on: Tube.defs]
+#endif
+
+in TC_OUT
+{
+	float3 Pos; 	
+	uint Id; 
+	
+	float3 LPos;
+#ifdef CAPS	
+	float CVInfluence;
+#endif
+	
+	float3 OVec1; 	
+#ifdef CAPS	
+	bool CapPatchFlag;	
+#endif
+
+#ifdef CALC_WIREFRAME
+	float2 UV;
+#endif
+} In[];
+
+out TE_OUT
+{
+	float3 Pos;
+	float L;
+
+#ifdef USE_PER_VERTEX_NORMALS	
+	float3 Normal;	 	
+#endif
+
+	flat uint Id; 
+
+#ifdef CAPS	
+	flat bool CapPatchFlag;	
+#endif
+
+#ifdef CALC_WIREFRAME	
+	float2 UV;
+#endif
+} Out;
+
+#define BILERP(IN, MEM, UV) lerp(lerp(IN[0].MEM, IN[1].MEM, UV.x), lerp(IN[3].MEM, IN[2].MEM, UV.x), UV.y)
+
+float3 GetOrthoVec(float3 v)
+{
+    return abs(v.x) > abs(v.z) ? float3(-v.y, v.x, 0.0f) : float3(0.0f, -v.z, v.y);
+}
+
+layout(quads, fractional_odd_spacing, ccw) in;
+void main()
+{	
+	float2 uv = gl_TessCoord.xy;
+
+	
+	Out.Id = In[0].Id;
+	Tube tube = Tube_Load(In[0].Id);
+	
+	
+	float3 lPos = BILERP(In, LPos, uv);
+
+	float  l = lPos.y * RcpTopVRingId_f;
+	float3 p = EvalPosCurve(tube, l);
+	float  r = EvalRadCurve(tube, l); 
+	
+	
+	float3 wPos;
+	
+#ifdef CAPS
+	Out.CapPatchFlag = In[0].CapPatchFlag;
+	
+	if(In[0].CapPatchFlag)
+	{
+		wPos = BILERP(In, Pos, uv);
+		
+	#ifdef USE_PER_VERTEX_NORMALS
+		Out.Normal = normalize(cross(In[1].Pos - In[0].Pos, In[2].Pos - In[0].Pos));
+	#endif
+	
+		bool noCVInfluenceCond = BILERP(In, CVInfluence, uv) == 0.0;
+		
+		if(noCVInfluenceCond)
+		wPos = p + r * normalize(wPos - p);
+	}
+	else
+#endif
+	{
+		lPos.xz = normalize(lPos.xz);
+
+		float3 tangent = normalize(EvalPTanCurve(tube, l));
+		float3 ovec1 = normalize(lerp(
+		normalize(ProjToPlane(In[0].OVec1, tangent)), 
+		normalize(ProjToPlane(In[2].OVec1, tangent)), uv.x));
+		
+		// ovec1 = normalize(GetOrthoVec(tangent));
+		
+		float3 ovec2 = cross(tangent, ovec1);
+			// ovec2 = normalize(ovec2);
+			
+		float3 ovec = ovec2 * lPos.z - ovec1 * lPos.x;
+		// ovec = normalize(BILERP(In, Pos, uv) - p);
+		// ovec = normalize(ProjToPlane(BILERP(In, Pos, uv) - p, tangent));
+
+		wPos = p + ovec * r;
+	
+	#ifdef USE_PER_VERTEX_NORMALS
+		Out.Normal = CalcSurfaceNormal(tube, ovec, l);
+	#endif
+	}
+	
+	Out.L = l;
+	Out.Pos = wPos;
+	
+#ifdef CALC_WIREFRAME
+	Out.UV = BILERP(In, UV, uv);
+#endif
+	
+	gl_Position = mul(float4(wPos, 1.0), ViewProjMat);
+}

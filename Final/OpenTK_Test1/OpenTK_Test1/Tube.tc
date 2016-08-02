@@ -1,0 +1,188 @@
+#ifndef TUBE_DEFS
+	#error [Tube.tc depends on: Tube.defs]
+#endif
+
+float2 EvalScreenSpacePosition(float3 Pos)
+{
+	float4 pPos = mul(float4(Pos, 1.0), ViewProjMat);
+	
+	return pPos.xy / pPos.w;
+}
+
+float EvalScreenSpaceW(float3 Pos)
+{
+	float4 pPos = mul(float4(Pos, 1.0), ViewProjMat);
+	
+	return pPos.w;
+}
+
+float EvalSSTessFac(float3 Pos0, float3 Pos1, float maxEdgeLen)
+{
+	float2 sPos0 = EvalScreenSpacePosition(Pos0);
+	float2 sPos1 = EvalScreenSpacePosition(Pos1);
+	
+	float len = length((sPos1 - sPos0) * PixelCount.xy * 0.5);
+
+	return 1.0 + len / maxEdgeLen;
+	return max(len / maxEdgeLen, 1.0);
+}
+
+float EvalSSTessFac2(float3 Pos0, float3 Pos1, float maxEdgeLen)
+{
+	float3 PosM = (Pos0 + Pos1) * 0.5;
+	float len = length(Pos0 - Pos1) / EvalScreenSpaceW(PosM);
+	
+	len *= max(PixelCount.x, PixelCount.y) * 0.5;
+
+	return 1.0 + len / maxEdgeLen;
+	return max(len / maxEdgeLen, 1.0);
+}
+
+
+in VS_OUT
+{
+	float3 Pos; 
+	uint Id; 
+	
+	float3 LPos; 
+	float Cull;
+	
+	float3 OVec1; 		
+#ifdef CAPS	
+	bool CVFlag;
+#endif
+	
+	float EyeFac;
+	float MaxEdgeLen;
+} In[];
+
+out TC_OUT
+{
+	float3 Pos; 	
+	uint Id; 
+	
+	float3 LPos;
+#ifdef CAPS	
+	float CVInfluence;
+#endif
+	
+	float3 OVec1; 	
+#ifdef CAPS	
+	bool CapPatchFlag;	
+#endif
+
+#ifdef CALC_WIREFRAME	
+	float2 UV;
+#endif
+} Out[];
+
+
+#define ID gl_InvocationID
+#define Edges gl_TessLevelOuter
+#define Inner gl_TessLevelInner
+
+layout(vertices = 4) out;
+void main()
+{
+	// back patch culling / hidden cap patch culling
+	if(In[0].Cull + In[1].Cull + In[2].Cull + In[3].Cull > 3.0) 
+	{
+		Edges[0] = 0.0;
+		Edges[1] = 0.0;
+		Edges[2] = 0.0;
+		Edges[3] = 0.0;
+		
+		Inner[0] = 0.0;
+		Inner[1] = 0.0;
+		
+		return;
+	}
+	
+    Out[ID].Pos    = In[ID].Pos;
+    Out[ID].LPos   = In[ID].LPos;
+	Out[ID].OVec1  = In[ID].OVec1;
+    Out[ID].Id     = In[ID].Id;
+
+#ifdef CAPS	
+    Out[ID].CVInfluence = In[ID].CVFlag ? 1.0 : 0.0;
+    Out[ID].CapPatchFlag = false;
+#endif
+
+#ifdef CALC_WIREFRAME
+	Out[ID].UV  = float2(ToFloat((ID & 1) == (ID >> 1)), ToFloat((ID >> 1) == 0));
+#endif
+	
+    if (ID == 0) 
+    {		
+	#ifdef CAPS
+		Out[ID].CapPatchFlag = In[0].CVFlag || In[1].CVFlag || In[2].CVFlag || In[3].CVFlag;
+	#endif
+	
+		// silhouette tessellation
+		float maxEdgeLenS = 8.0;
+		float maxTessFacS = 7.0;
+		
+		Edges[0] = min(EvalSSTessFac2(In[3].Pos, In[0].Pos, maxEdgeLenS), maxTessFacS);
+		Edges[1] = min(EvalSSTessFac2(In[0].Pos, In[1].Pos, maxEdgeLenS), maxTessFacS);
+		Edges[2] = min(EvalSSTessFac2(In[1].Pos, In[2].Pos, maxEdgeLenS), maxTessFacS);
+		Edges[3] = min(EvalSSTessFac2(In[2].Pos, In[3].Pos, maxEdgeLenS), maxTessFacS);
+		
+		Edges[0] = lerp(1.0, Edges[0], max(In[3].EyeFac, In[0].EyeFac));
+		Edges[1] = lerp(1.0, Edges[1], max(In[0].EyeFac, In[1].EyeFac));
+		Edges[2] = lerp(1.0, Edges[2], max(In[1].EyeFac, In[2].EyeFac));
+		Edges[3] = lerp(1.0, Edges[3], max(In[2].EyeFac, In[3].EyeFac));
+
+		
+		// float maxEdgeLen = 32.0;
+		// float maxTessFac = 5.0;
+		
+		// Edges[0] = max(Edges[0], min(EvalSSTessFac(In[3].Pos, In[0].Pos, maxEdgeLen), maxTessFac));
+		// Edges[1] = max(Edges[1], min(EvalSSTessFac(In[0].Pos, In[1].Pos, maxEdgeLen), maxTessFac));
+		// Edges[2] = max(Edges[2], min(EvalSSTessFac(In[1].Pos, In[2].Pos, maxEdgeLen), maxTessFac));
+		// Edges[3] = max(Edges[3], min(EvalSSTessFac(In[2].Pos, In[3].Pos, maxEdgeLen), maxTessFac));
+		
+		// body tessellation
+		float maxTessFac = 5.0;
+		
+		float maxEdgeLen0 = max(In[3].MaxEdgeLen, In[0].MaxEdgeLen);
+		float maxEdgeLen1 = max(In[0].MaxEdgeLen, In[1].MaxEdgeLen);
+		float maxEdgeLen2 = max(In[1].MaxEdgeLen, In[2].MaxEdgeLen);
+		float maxEdgeLen3 = max(In[2].MaxEdgeLen, In[3].MaxEdgeLen);
+		
+		Edges[0] = max(Edges[0], min(EvalSSTessFac(In[3].Pos, In[0].Pos, maxEdgeLen0), maxTessFac));
+		Edges[1] = max(Edges[1], min(EvalSSTessFac(In[0].Pos, In[1].Pos, maxEdgeLen1), maxTessFac));
+		Edges[2] = max(Edges[2], min(EvalSSTessFac(In[1].Pos, In[2].Pos, maxEdgeLen2), maxTessFac));
+		Edges[3] = max(Edges[3], min(EvalSSTessFac(In[2].Pos, In[3].Pos, maxEdgeLen3), maxTessFac));
+		
+		// Inner[0] = max(max(Edges[0], Edges[1]), max(Edges[2], Edges[3]));
+		// Inner[1] = Inner[0];
+		
+		Inner[1] = max(Edges[0], Edges[2]);
+		Inner[0] = max(Edges[1], Edges[3]);
+		
+		
+	#ifdef CAPS	
+		// base tessellation for caps (except seams)
+		if(In[3].CVFlag || In[0].CVFlag) Edges[0] = 1.0;
+		if(In[0].CVFlag || In[1].CVFlag) Edges[1] = 1.0;
+		if(In[1].CVFlag || In[2].CVFlag) Edges[2] = 1.0;
+		if(In[2].CVFlag || In[3].CVFlag) Edges[3] = 1.0;
+		
+		if(In[0].CVFlag || In[1].CVFlag || In[2].CVFlag || In[3].CVFlag) 
+		{
+			Inner[1] = 1.0;
+			Inner[0] = 1.0;
+		}
+	#endif	
+		
+		// float tessellationAmount = 1.0;
+		
+		// Edges[0] = tessellationAmount;
+		// Edges[1] = tessellationAmount;
+		// Edges[2] = tessellationAmount;
+		// Edges[3] = tessellationAmount;
+
+		// Inner[0] = tessellationAmount;
+		// Inner[1] = tessellationAmount;
+    }
+}

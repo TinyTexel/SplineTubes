@@ -1,0 +1,9 @@
+c:\users\hummel\documents\visual studio 2013\Projects\OpenTK_Test1\OpenTK_Test1\bin\Debug\OpenTK_Test1.exe.config
+c:\users\hummel\documents\visual studio 2013\Projects\OpenTK_Test1\OpenTK_Test1\obj\Debug\OpenTK_Test1.csprojResolveAssemblyReference.cache
+c:\users\hummel\documents\visual studio 2013\Projects\OpenTK_Test1\OpenTK_Test1\bin\Debug\OpenTK_Test1.exe
+c:\users\hummel\documents\visual studio 2013\Projects\OpenTK_Test1\OpenTK_Test1\bin\Debug\OpenTK_Test1.pdb
+c:\users\hummel\documents\visual studio 2013\Projects\OpenTK_Test1\OpenTK_Test1\bin\Debug\OpenTK.dll
+c:\users\hummel\documents\visual studio 2013\Projects\OpenTK_Test1\OpenTK_Test1\bin\Debug\OpenTK.pdb
+c:\users\hummel\documents\visual studio 2013\Projects\OpenTK_Test1\OpenTK_Test1\bin\Debug\OpenTK.xml
+c:\users\hummel\documents\visual studio 2013\Projects\OpenTK_Test1\OpenTK_Test1\obj\Debug\OpenTK_Test1.exe
+c:\users\hummel\documents\visual studio 2013\Projects\OpenTK_Test1\OpenTK_Test1\obj\Debug\OpenTK_Test1.pdb

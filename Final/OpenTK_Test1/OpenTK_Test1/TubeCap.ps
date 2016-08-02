@@ -1,0 +1,117 @@
+#version 430
+
+#define float2 vec2
+#define float3 vec3
+#define float4 vec4
+
+float saturate(float x) { return clamp(x, 0.0, 1.0); }
+vec2 saturate(vec2 x) { return clamp(x, vec2(0.0), vec2(1.0)); }
+vec3 saturate(vec3 x) { return clamp(x, vec3(0.0), vec3(1.0)); }
+vec4 saturate(vec4 x) { return clamp(x, vec4(0.0), vec4(1.0)); }
+
+#define lerp(a, b, l) mix(a, b, l)
+#define mul(a, b) (a * b)
+// #define Pos gl_Position
+
+const float Pi = 3.141592653589793238462643383279502884197169399375105820974944592;
+const float Rcp3 = 1.0 / 3.0;
+
+const float RcpMaxLId = 1.0 / 31.0;
+
+const uint SegmentSize = 1 + 16;
+const uint NodeSize = 4;
+
+
+float RescaleToSSDist(float x)
+{
+	return x / length(float2(dFdx(x), dFdy(x)));
+}
+
+layout (std140) uniform PerFrameBuffer
+{ 
+    mat4 ViewProjMat;
+	vec3 CamPos;
+};
+
+in GS_OUT
+{
+	float3 WPos;
+	float3 Normal;
+	float3 UVW;
+	float3 UVW0;
+} In;
+
+// in TE_OUT
+// {
+	// float3 WPos; 		
+	// float3 Normal;			
+	// float4 UVWM;
+// } In;
+
+// in VS_OUT
+// {
+	// float3 Pos; 		
+	// float3 LPos; 		
+	// float3 Normal; 		
+	// float3 OVec1;		
+// } In;
+
+
+out vec4 FragColor;
+ 
+void main()
+{
+    vec3 hnormal = normalize(cross(dFdx(In.WPos), dFdy(In.WPos)));
+    FragColor = vec4(hnormal * 0.5 + 0.5, 1.0);
+	
+		// Tube tube = Tube_Load(In.Id);
+	// // Tube tube = CreateTestTube();
+	// float l = In.TubeL;
+	
+	// float3 col  = EvalColCurve(tube, l);
+	
+	// float3 sPos = EvalPosCurve(tube, l);
+	// float3 t    = EvalPTanCurve(tube, l);
+	// float  r    = EvalRadCurve(tube, l); 
+	
+
+	// // float3 ovec = normalize(In.WPos - sPos);
+	// float3 ovec = normalize(ProjToPlane(In.WPos - sPos, t));
+	
+	// float3 wPos = sPos + ovec * r;
+	
+	
+	// // float3 normal = CalcSurfaceNormal(tube, ovec, l);
+	// float3 normal = normalize(In.Normal);
+	// // float3 normal = ovec;
+
+
+	// float3 eyeVec = normalize(CamPos - wPos);
+
+	// float rim = saturate(dot(eyeVec, normal));
+	// // float rim = abs(dot(eyeVec, normal));
+	// // float edge = min(In.EDist.x, min(In.EDist.y, In.EDist.z));
+	float edge0 = min(RescaleToSSDist(In.UVW0.x), min(RescaleToSSDist(In.UVW0.y), RescaleToSSDist(In.UVW0.z)));
+	float edge = min(RescaleToSSDist(In.UVW.x), min(RescaleToSSDist(In.UVW.y), RescaleToSSDist(In.UVW.z)));
+	
+	FragColor.rgb = pow(saturate(FragColor.rgb), float3(2.2));
+	FragColor.rgb *= saturate(edge0 - 0.5);
+	FragColor.rgb *= saturate(saturate(edge - 0.125) + 0.4);
+	// // if(rim <= 0.0) discard;
+	
+	// // edge0 = 
+	
+	// col *= rim;
+	// // col= lerp(1.0 - col, col, saturate(sin(In.tubeL * 2.0 * Pi * 10) * 0.5 + 0.5 + 0.01));
+	// FragColor = vec4(normal * 0.5 + 0.5, 1.0);
+	// // FragColor = float4(pow(saturate(col), float3(1.0 / 2.2)), 1.0);
+	
+	// FragColor.rgb = col;
+	// FragColor.rgb = lerp(float3(1.0), float3(1.0, 0.25, 0.1), rim)*rim;
+	// FragColor.rgb = pow(hnormal * 0.5 + 0.5, float3(2.2)) * float3(saturate(edge - 0.125) + 0.4) * float3(saturate(edge0 - 0.5) + 0.0) * saturate(dot(eyeVec, hnormal));
+		// // FragColor.rgb = (pow(hnormal * 0.5 + 0.5, float3(2.2)) * saturate(dot(eyeVec, hnormal)) + float3(1.0 - saturate(edge - 0.0))) * float3(saturate(edge0 - 1.0) + 0.0) ;
+	// // FragColor.rgb = lerp(1.0 - (hnormal * 0.5 + 0.5), (hnormal * 0.5 + 0.5), saturate(edge - 0.125)) * saturate(dot(eyeVec, hnormal));
+	// // FragColor.rgb = float3(rim);
+	FragColor = float4(pow(saturate(FragColor.rgb), float3(1.0 / 2.2)), 1.0);
+	// // FragColor = float4(col, 1.0);
+}

@@ -1,0 +1,172 @@
+#version 430
+
+#define float2 vec2
+#define float3 vec3
+#define float4 vec4
+
+float saturate(float x) { return clamp(x, 0.0, 1.0); }
+vec2 saturate(vec2 x) { return clamp(x, vec2(0.0), vec2(1.0)); }
+vec3 saturate(vec3 x) { return clamp(x, vec3(0.0), vec3(1.0)); }
+vec4 saturate(vec4 x) { return clamp(x, vec4(0.0), vec4(1.0)); }
+
+#define lerp(a, b, l) mix(a, b, l)
+#define mul(a, b) (a * b)
+
+
+layout (std140) uniform StaticBuffer
+{ 
+	vec2 PixelCount;
+};
+
+// const float2 PixelCount = float2(640.0, 480.0);
+
+layout (std140) uniform PerFrameBuffer
+{ 
+    mat4 ViewProjMat;
+	vec3 CamPos;
+};
+
+
+float2 EvalScreenSpacePosition(float3 Pos)
+{
+	float4 pPos = mul(float4(Pos, 1.0), ViewProjMat);
+	
+	return pPos.xy / pPos.w;
+}
+
+float EvalScreenSpaceW(float3 Pos)
+{
+	float4 pPos = mul(float4(Pos, 1.0), ViewProjMat);
+	
+	return pPos.w;
+}
+
+float EvalSSTessFac(float3 Pos0, float3 Pos1, float maxEdgeLen)
+{
+	float2 sPos0 = EvalScreenSpacePosition(Pos0);
+	float2 sPos1 = EvalScreenSpacePosition(Pos1);
+	
+	float len = length((sPos1 - sPos0) * PixelCount.xy * 0.5);
+
+	return 1.0 + len / maxEdgeLen;
+	return max(len / maxEdgeLen, 1.0);
+}
+
+float EvalSSTessFac2(float3 Pos0, float3 Pos1, float maxEdgeLen)
+{
+	float3 PosM = (Pos0 + Pos1) * 0.5;
+	float len = length(Pos0 - Pos1) / EvalScreenSpaceW(PosM);
+	
+	len *= max(PixelCount.x, PixelCount.y) * 0.5;
+
+	return 1.0 + len / maxEdgeLen;
+	return max(len / maxEdgeLen, 1.0);
+}
+
+float ToFloat(bool cond) { return cond ? 1.0 : 0.0; }
+
+layout(vertices = 3) out;
+
+in VS_OUT
+{
+	float3 Pos; 		
+	float3 LPos; 		
+	float3 Normal;		
+	float3 OVec1;		
+} In[];
+
+out TC_OUT
+{
+	float3 Pos; 		
+	float3 LPos; 		
+	float3 Normal;		
+	float3 OVec1;		
+	float3 UVW0;
+} Out[];
+
+
+#define ID gl_InvocationID
+
+void main()
+{
+    Out[ID].Pos    = In[ID].Pos;
+    Out[ID].LPos   = In[ID].LPos;
+	Out[ID].Normal = In[ID].Normal;
+	Out[ID].OVec1  = In[ID].OVec1;
+
+	Out[ID].UVW0  = float3(ToFloat(ID == 0), ToFloat(ID == 1), ToFloat(ID == 2));
+	// Foo foo = Foo_New(0.0);
+	
+    if (ID == 0) 
+    {		
+		float Edges[4], Inside[2];
+			
+		// float eyeFac[4];
+		
+		// for(uint i = 0; i < 4; ++i)
+		// {
+			// float3 eyeVec = normalize(CamPos - In[i].Pos);
+			// float a = 1.0 - abs(dot(eyeVec, In[i].Normal));
+			
+			// a = saturate(a * 1.2);
+			
+			// eyeFac[i] = a * a * a;
+		// }
+		
+		
+		// float maxEdgeLenS = 8.0;
+		// float maxTessFacS = 7.0;
+		
+		// Edges[0] = min(EvalSSTessFac2(In[3].Pos, In[0].Pos, maxEdgeLenS), maxTessFacS);
+		// Edges[1] = min(EvalSSTessFac2(In[0].Pos, In[1].Pos, maxEdgeLenS), maxTessFacS);
+		// Edges[2] = min(EvalSSTessFac2(In[1].Pos, In[2].Pos, maxEdgeLenS), maxTessFacS);
+		// Edges[3] = min(EvalSSTessFac2(In[2].Pos, In[3].Pos, maxEdgeLenS), maxTessFacS);
+		
+		// Edges[0] = lerp(1.0, Edges[0], max(eyeFac[3], eyeFac[0]));
+		// Edges[1] = lerp(1.0, Edges[1], max(eyeFac[0], eyeFac[1]));
+		// Edges[2] = lerp(1.0, Edges[2], max(eyeFac[1], eyeFac[2]));
+		// Edges[3] = lerp(1.0, Edges[3], max(eyeFac[2], eyeFac[3]));
+		
+		// // float maxTessFac0 = 5.0;
+		// // Edges[0] = lerp(1.0, maxTessFac0, max(eyeFac[3], eyeFac[0]));
+		// // Edges[1] = lerp(1.0, maxTessFac0, max(eyeFac[0], eyeFac[1]));
+		// // Edges[2] = lerp(1.0, maxTessFac0, max(eyeFac[1], eyeFac[2]));
+		// // Edges[3] = lerp(1.0, maxTessFac0, max(eyeFac[2], eyeFac[3]));
+
+		
+		// float maxEdgeLen = 32.0;
+		// float maxTessFac = 5.0;
+		
+		// Edges[0] = max(Edges[0], min(EvalSSTessFac(In[3].Pos, In[0].Pos, maxEdgeLen), maxTessFac));
+		// Edges[1] = max(Edges[1], min(EvalSSTessFac(In[0].Pos, In[1].Pos, maxEdgeLen), maxTessFac));
+		// Edges[2] = max(Edges[2], min(EvalSSTessFac(In[1].Pos, In[2].Pos, maxEdgeLen), maxTessFac));
+		// Edges[3] = max(Edges[3], min(EvalSSTessFac(In[2].Pos, In[3].Pos, maxEdgeLen), maxTessFac));
+		
+		
+		// Inside[0] = max(max(Edges[0], Edges[1]), max(Edges[2], Edges[3]));
+		// Inside[1] = Inside[0];
+		
+		// Inside[1] = max(Edges[0], Edges[2]);
+		// Inside[0] = max(Edges[1], Edges[3]);
+		
+		
+		float tessellationAmount = 13.0;
+		
+		Edges[0] = tessellationAmount;
+		Edges[1] = tessellationAmount;
+		Edges[2] = tessellationAmount;
+		// Edges[3] = tessellationAmount;
+
+		Inside[0] = tessellationAmount;
+		// Inside[1] = tessellationAmount;
+
+		
+		gl_TessLevelOuter[0] = Edges[0];
+		gl_TessLevelOuter[1] = Edges[1];
+		gl_TessLevelOuter[2] = Edges[2];
+		// gl_TessLevelOuter[3] = Edges[3];
+		
+		gl_TessLevelInner[0] = Inside[0];
+		// gl_TessLevelInner[1] = Inside[1];
+    }
+}

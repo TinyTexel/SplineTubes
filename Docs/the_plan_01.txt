@@ -43,3 +43,7 @@ Mai:
 23.05 - 29.05		|	                        |	
 30.05 - 05.06		|	                        |	
 
+
+CBuffer vs VertexStream:
+http://www.gamedev.net/topic/655982-instance-data-in-vertex-buffer-vs-cbuffersv-instanceid/
+http://http.developer.nvidia.com/GPUGems3/gpugems3_ch02.html

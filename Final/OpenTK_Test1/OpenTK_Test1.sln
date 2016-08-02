@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplineTubes", "OpenTK_Test1\SplineTubes.csproj", "{81E573C9-326E-4830-807F-67ECC2365A31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B340C295-7FF0-4820-A9F8-BC6D6154FAB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cqu", "..\cqu\cqu.csproj", "{E8859484-B610-42B2-9B71-BC8FE2E06E41}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9E74DD70-EEE1-4D37-9474-4FF4DC65E52E} = {9E74DD70-EEE1-4D37-9474-4FF4DC65E52E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coco", "..\Coco\Coco.csproj", "{9E74DD70-EEE1-4D37-9474-4FF4DC65E52E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81E573C9-326E-4830-807F-67ECC2365A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E573C9-326E-4830-807F-67ECC2365A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E573C9-326E-4830-807F-67ECC2365A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E573C9-326E-4830-807F-67ECC2365A31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8859484-B610-42B2-9B71-BC8FE2E06E41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8859484-B610-42B2-9B71-BC8FE2E06E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8859484-B610-42B2-9B71-BC8FE2E06E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8859484-B610-42B2-9B71-BC8FE2E06E41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E74DD70-EEE1-4D37-9474-4FF4DC65E52E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E74DD70-EEE1-4D37-9474-4FF4DC65E52E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E74DD70-EEE1-4D37-9474-4FF4DC65E52E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E74DD70-EEE1-4D37-9474-4FF4DC65E52E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E74DD70-EEE1-4D37-9474-4FF4DC65E52E} = {B340C295-7FF0-4820-A9F8-BC6D6154FAB3}
+	EndGlobalSection
+EndGlobal

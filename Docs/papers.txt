@@ -1,4 +1,7 @@
 
+IA, RAA: http://www.cs.utah.edu/~knolla/cgrtia.pdf
+http://ralph.cs.cf.ac.uk/papers/Geometry/RayCast.pdf
+
 Introduction
 	- scientific vis works with things
 	- to render things one can use tubes
@@ -159,6 +162,11 @@ https://en.wikipedia.org/wiki/Quartic_function#Ferrari.27s_solution
 
 splines/tubes:
 > 
+Computer Description of Curved Objects
+http://www.dtic.mil/dtic/tr/fulltext/u2/755139.pdf
+
+Calculation of Reference Frames along a Space Curve
+http://webhome.cs.uvic.ca/~blob/courses/305/notes/pdf/ref-frames.pdf
 
 GPU-Based Hyperstreamlines for Diffusion Tensor Imaging
 http://www.visus.uni-stuttgart.de/uploads/tx_vispublications/eurovis06-reina.pdf
